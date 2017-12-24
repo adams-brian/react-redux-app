@@ -1,5 +1,4 @@
-import { combineReducers, createStore } from 'redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { LocationChangeAction } from 'react-router-redux';
 
 export interface AppState {
   loading: boolean;
@@ -10,41 +9,41 @@ interface Action {
   type: string;
 }
 
-const START_LOADING = '[App] START LOADING';
+export const START_LOADING = '[App] START LOADING';
 class StartLoading implements Action {
   readonly type = START_LOADING;
 }
-const DONE_LOADING = '[App] DONE LOADING';
+export const DONE_LOADING = '[App] DONE LOADING';
 class DoneLoading implements Action {
   readonly type = DONE_LOADING;
 }
-type AppAction = StartLoading | DoneLoading;
+type LoadingAction = StartLoading | DoneLoading;
 
 abstract class ActionWithNumberPayload implements Action {
   readonly type: string;
   constructor(public payload: number) {}
 }
-const INCREMENT = '[Counters] INCREMENT';
+export const INCREMENT = '[Counters] INCREMENT';
 class Increment extends ActionWithNumberPayload {
   readonly type = INCREMENT;
 }
-const DECREMENT = '[Counters] DECREMENT';
+export const DECREMENT = '[Counters] DECREMENT';
 class Decrement extends ActionWithNumberPayload {
   readonly type = DECREMENT;
 }
-const RESET = '[Counters] RESET';
+export const RESET = '[Counters] RESET';
 class Reset extends ActionWithNumberPayload {
   readonly type = RESET;
 }
-const ADD_COUNTER = '[Counters] ADD COUNTER';
+export const ADD_COUNTER = '[Counters] ADD COUNTER';
 class AddCounter implements Action {
   readonly type = ADD_COUNTER;
 }
-const REMOVE_COUNTER = '[Counters] REMOVE COUNTER';
+export const REMOVE_COUNTER = '[Counters] REMOVE COUNTER';
 class RemoveCounter extends ActionWithNumberPayload {
   readonly type = REMOVE_COUNTER;
 }
-const COUNTERS_UPDATED = '[Counters] COUNTERS UPDATED';
+export const COUNTERS_UPDATED = '[Counters] COUNTERS UPDATED';
 class CountersUpdated implements Action {
   readonly type = COUNTERS_UPDATED;
   constructor(public payload: number[]) {}
@@ -63,7 +62,7 @@ export const actionCreators = {
   countersUpdated: (counters: number[]) => Object.assign({}, new CountersUpdated(counters))
 };
 
-function loadingReducer(state: boolean = false, action: AppAction) {
+function loadingReducer(state: boolean = false, action: LoadingAction) {
   switch (action.type) {
     case START_LOADING:
       return true;
@@ -108,12 +107,9 @@ function countersReducer(state: number[] = [], action: CounterAction) {
   }
 }
 
-const rootReducer = combineReducers({ 
+export const reducers = { 
   loading: loadingReducer,
   counters: countersReducer
-});
+};
 
-export const store = createStore(
-  rootReducer,
-  devToolsEnhancer({})
-);
+export type AppAction = LoadingAction | CounterAction | LocationChangeAction;
