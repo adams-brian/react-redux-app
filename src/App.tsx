@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { Nav } from './components/nav';
 import { Counters } from './containers/counters';
+import { Users } from './components/users';
 import { Footer } from './components/footer';
 
 import { AppState } from './store';
@@ -17,19 +18,21 @@ export const App = withRouter(connect(
   (state: AppState) => ({ loading: state.loading })
 )(
   (props: AppProps) => (
-    <div className="App">
+    <div className="App d-flex flex-column">
       <Nav/>
-      <div className="container">
+      <div className="content">
         {props.loading
         ?
           <div className="loading"/>
         :
-          <Switch>
-            <Redirect exact={true} from="/" to="/counters"/>
-            <Route path="/counters" component={Counters}/>
-            <Route path="/users" render={() => <h1>Users</h1>}/>
-            <Route path="/about" render={() => <h1>About</h1>}/>
-          </Switch>
+          <div className="container">
+            <Switch>
+              <Redirect exact={true} from="/" to="/counters"/>
+              <Route path="/counters" component={Counters}/>
+              <Route path="/users" component={Users}/>
+              <Route path="/about" render={() => <h1>About</h1>}/>
+            </Switch>
+          </div>
         }
       </div>
       <Footer/>
