@@ -14,7 +14,7 @@ const loadCounters: Epic<AppAction, AppState> = (action$, store) => action$
   .do((action: LocationChangeAction) => {
     if (action.payload.pathname.startsWith('/counters')) {
       store.dispatch(actionCreators.startLoading());
-      fetch('http://localhost:3000/counters')
+      fetch('http://localhost:4000/counters')
       .then((response) => response.json())
       .then((json) => {
         store.dispatch(actionCreators.countersUpdated(json.data));
@@ -32,7 +32,7 @@ const saveCounters: Epic<AppAction, AppState> = (action$, store) => action$
   .ofType(INCREMENT, DECREMENT, RESET, ADD_COUNTER, REMOVE_COUNTER)
   .debounceTime(1000)
   .do((action: AppAction) => {
-    fetch('http://localhost:3000/counters', {
+    fetch('http://localhost:4000/counters', {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -50,7 +50,7 @@ const loadUsers: Epic<AppAction, AppState> = (action$, store) => action$
     const s = store.getState();
     if (action.payload.pathname.startsWith('/users') && s.users.length === 0) {
       store.dispatch(actionCreators.startLoading());
-      fetch('http://localhost:3000/users')
+      fetch('http://localhost:4000/users')
       .then((response) => response.json())
       .then((json) => {
         store.dispatch(actionCreators.usersUpdated(json.data));
@@ -67,7 +67,7 @@ const loadUsers: Epic<AppAction, AppState> = (action$, store) => action$
 const createUser: Epic<AppAction, AppState> = (action$, store) => action$
   .ofType(CREATE_USER)
   .do((action: CreateUser) => {
-    fetch('http://localhost:3000/users', {
+    fetch('http://localhost:4000/users', {
       method: 'put',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -82,7 +82,7 @@ const createUser: Epic<AppAction, AppState> = (action$, store) => action$
 const deleteUser: Epic<AppAction, AppState> = (action$, store) => action$
   .ofType(DELETE_USER)
   .do((action: DeleteUser) => {
-    fetch('http://localhost:3000/users/' + action.payload, {
+    fetch('http://localhost:4000/users/' + action.payload, {
       method: 'delete',
       headers: {
         'Accept': 'application/json, text/plain, */*',
