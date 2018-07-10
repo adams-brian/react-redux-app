@@ -15,30 +15,30 @@ interface IAppProps extends RouteComponentProps<{}> {
   loading: boolean;
 }
 
-const App = withRouter(connect(
-  (state: IState) => ({ loading: state.loading })
-)(
-  (props: IAppProps) => (
-    <div className="App d-flex flex-column">
-      <Nav/>
-      <div className="content">
-        {props.loading
-        ?
-          <div className="loading"/>
-        :
-          <div className="container">
-            <Switch>
-              <Redirect exact={true} from="/" to="/counters"/>
-              <Route path="/counters" component={Counters}/>
-              <Route path="/users" component={Users}/>
-              <Route path="/about" render={About}/>
-            </Switch>
-          </div>
-        }
-      </div>
-      <Footer/>
+export const App = (props: IAppProps) => (
+  <div className="App d-flex flex-column">
+    <Nav/>
+    <div className="content">
+      {props.loading
+      ?
+        <div className="loading"/>
+      :
+        <div className="container">
+          <Switch>
+            <Redirect exact={true} from="/" to="/counters"/>
+            <Route path="/counters" component={Counters}/>
+            <Route path="/users" component={Users}/>
+            <Route path="/about" component={About}/>
+          </Switch>
+        </div>
+      }
     </div>
-  )
-));
+    <Footer/>
+  </div>
+);
 
-export default App;
+export default withRouter(
+  connect(
+    (state: IState) => ({ loading: state.loading })
+  )( App )
+);
