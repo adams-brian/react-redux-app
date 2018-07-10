@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { Counter } from './counter';
+import { connect } from 'react-redux';
+
+import { actionCreators, IAppState } from '../../store';
+import Counter from './counter';
 
 interface ICountersProps {
   counters: number[];
@@ -30,3 +33,16 @@ export const Counters = (props: ICountersProps) => (
     </div>
   </div>
 );
+
+export default connect(
+  (state: IAppState) => 
+    ({ counters: state.counters }),
+  { 
+    addCounter: actionCreators.addCounter,
+    decrement: actionCreators.decrement,
+    increment: actionCreators.increment,
+    remove: actionCreators.removeCounter,
+    reset: actionCreators.reset
+  }
+)(Counters);
+  

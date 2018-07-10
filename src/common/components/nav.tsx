@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-export const Nav = () => (
+const Nav = () => (
   <div>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <button 
@@ -31,3 +31,5 @@ export const Nav = () => (
     </nav>
   </div>
 );
+
+export default Nav;

@@ -93,7 +93,7 @@ const deleteUser: Epic<AppAction, IAppState> = (action$, store) => action$
   })
   .ignoreElements();
 
-export const epics = combineEpics(
+export default combineEpics(
   loadCounters,
   saveCounters,
   loadUsers,

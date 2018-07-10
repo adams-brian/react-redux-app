@@ -8,7 +8,7 @@ interface ICounterProps {
   remove: () => void;
 }
 
-export const Counter = (props: ICounterProps) => (
+const Counter = (props: ICounterProps) => (
   <div className="counter">
     <button type="button" className="close" aria-label="Close" onClick={props.remove}>
       <span aria-hidden="true">&times;</span>
@@ -21,3 +21,5 @@ export const Counter = (props: ICounterProps) => (
     </div>
   </div>
 );
+
+export default Counter;

@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 
 import './App.css';
-import { Footer } from './components/footer';
-import { Nav } from './components/nav';
-import { Users } from './components/users';
-import { Counters } from './containers/counters';
+import Footer from './common/components/footer';
+import Nav from './common/components/nav';
+import Counters from './counters/components/counters';
+import Users from './users/components/users';
+
 import { IAppState } from './store';
 
 interface IAppProps extends RouteComponentProps<{}> {
@@ -14,7 +15,7 @@ interface IAppProps extends RouteComponentProps<{}> {
 }
 
 /* tslint:disable:jsx-no-lambda */
-export const App = withRouter(connect(
+const App = withRouter(connect(
   (state: IAppState) => ({ loading: state.loading })
 )(
   (props: IAppProps) => (
@@ -39,3 +40,5 @@ export const App = withRouter(connect(
     </div>
   )
 ));
+
+export default App;

@@ -7,8 +7,8 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEpicMiddleware } from 'redux-observable';
 
-import { App } from './App';
-import { epics } from './epics';
+import App from './App';
+import epics from './epics';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { reducers } from './store';

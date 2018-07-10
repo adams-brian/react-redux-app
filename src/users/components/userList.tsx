@@ -1,7 +1,11 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
+import { Dispatch } from 'redux';
 
-import { IUser } from '../store';
+import { IUser } from '../../store';
+import { actionCreators, AppAction, IAppState } from '../../store';
 
 interface IUserListProps {
   list: IUser[];
@@ -40,3 +44,12 @@ export const UserList = (props: IUserListProps) => (
     </Link>
   </div>
 );
+
+export default connect(
+  (state: IAppState) => 
+    ({ list: state.users }),
+  (dispatch: Dispatch<AppAction>) => ({
+    deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),
+    editUser: (id: string) => { dispatch(push('/users/' + id)); }
+  })
+)(UserList);

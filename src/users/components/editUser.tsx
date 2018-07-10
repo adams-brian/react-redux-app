@@ -1,7 +1,12 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
+import { Dispatch } from 'redux';
+import { generate } from 'shortid';
 
-import { IUser } from '../store';
+import { actionCreators, AppAction, IAppState, IUser } from '../../store';
 
 interface IEditUserProps extends IUser {
   submit: (user: IUser) => void;
@@ -81,3 +86,19 @@ export class EditUser extends React.Component<IEditUserProps, IUser> {
     this.props.submit(this.state);
   }
 }
+
+export default connect(
+  (state: IAppState, props: RouteComponentProps<{ id: string }>) => 
+    state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser,
+  (dispatch: Dispatch<AppAction>) => ({
+    submit: (u: IUser) => {
+      if (u._id && u._id.length > 0) {
+        dispatch(actionCreators.updateUser(u));
+      }
+      else {
+        dispatch(actionCreators.createUser(Object.assign({}, u, { _id: generate() })));
+      }
+      dispatch(push('/users'));
+    }
+  })
+)(EditUser);
