@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { Dispatch } from 'redux';
 
-import { IUser } from '../../store';
-import { actionCreators, AppAction, IAppState } from '../../store';
+import { actionCreators, IState, IUser, UsersAction } from '../store';
+import UserListRow from './userListRow';
 
 interface IUserListProps {
   list: IUser[];
@@ -13,7 +13,6 @@ interface IUserListProps {
   editUser: (id: string) => void;
 }
 
-/* tslint:disable:jsx-no-lambda */
 export const UserList = (props: IUserListProps) => (
   <div className="users-container">
     <h1 className="users-header">Users</h1>
@@ -26,17 +25,14 @@ export const UserList = (props: IUserListProps) => (
         </tr>
       </thead>
       <tbody>
-        {props.list.map(user => (
-          <tr key={user._id} onClick={() => props.editUser(user._id)}>
-            <td>{user.firstname}</td>
-            <td>{user.lastname}</td>
-            <td>
-              <button onClick={(e) => { e.stopPropagation(); props.deleteUser(user._id); }}>
-                <span className="fa fa-times"/>
-              </button>
-            </td>
-          </tr>
-        ))}
+        {props.list.map(user =>
+          <UserListRow 
+            key={user._id}
+            user={user}
+            editUser={props.editUser}
+            deleteUser={props.deleteUser}
+          />
+        )}
       </tbody>
     </table>
     <Link className="create-user" to="/users/createuser">
@@ -46,9 +42,9 @@ export const UserList = (props: IUserListProps) => (
 );
 
 export default connect(
-  (state: IAppState) => 
+  (state: IState) => 
     ({ list: state.users }),
-  (dispatch: Dispatch<AppAction>) => ({
+  (dispatch: Dispatch<UsersAction>) => ({
     deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),
     editUser: (id: string) => { dispatch(push('/users/' + id)); }
   })

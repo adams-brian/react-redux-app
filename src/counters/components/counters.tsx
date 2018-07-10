@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { actionCreators, IAppState } from '../../store';
+import { actionCreators, IState } from '../store';
 import Counter from './counter';
 
 interface ICountersProps {
@@ -13,19 +13,20 @@ interface ICountersProps {
   remove: (index: number) => void;
 }
 
-/* tslint:disable:jsx-no-lambda */
 export const Counters = (props: ICountersProps) => (
   <div className="counters-container">
     <h1>Counters</h1>
+    <h3>Count: {props.counters.length}</h3>
     <div className="counter-container">
       {props.counters.map((counter, index) => 
         (<Counter 
           key={index} /* not ideal, but it works in this case */
+          index={index}
           counter={counter}
-          increment={() => props.increment(index)}
-          decrement={() => props.decrement(index)}
-          reset={() => props.reset(index)}
-          remove={() => props.remove(index)}
+          increment={props.increment}
+          decrement={props.decrement}
+          reset={props.reset}
+          remove={props.remove}
         />))}
       <div className="add-counter rounded" onClick={props.addCounter}>
         <span className="fa fa-plus" />
@@ -35,7 +36,7 @@ export const Counters = (props: ICountersProps) => (
 );
 
 export default connect(
-  (state: IAppState) => 
+  (state: IState) => 
     ({ counters: state.counters }),
   { 
     addCounter: actionCreators.addCounter,

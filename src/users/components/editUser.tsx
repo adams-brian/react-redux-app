@@ -6,23 +6,17 @@ import { push } from 'react-router-redux';
 import { Dispatch } from 'redux';
 import { generate } from 'shortid';
 
-import { actionCreators, AppAction, IAppState, IUser } from '../../store';
+import { actionCreators, IState, IUser, UsersAction } from '../store';
 
-interface IEditUserProps extends IUser {
+interface IEditUserProps {
+  user: IUser;
   submit: (user: IUser) => void;
 }
 
 export class EditUser extends React.Component<IEditUserProps, IUser> {
   constructor(props: IEditUserProps) {
     super(props);
-    this.state = {
-      _id: props._id,
-      firstname: props.firstname,
-      lastname: props.lastname
-    };
-
-    this.inputChanged = this.inputChanged.bind(this);
-    this.submit = this.submit.bind(this);
+    this.state = Object.assign({}, props.user);
   }
 
   public render() {
@@ -81,16 +75,17 @@ export class EditUser extends React.Component<IEditUserProps, IUser> {
     } as Pick<IUser, keyof IUser>);
   }
 
-  private submit(e: React.FormEvent<HTMLButtonElement>) {
+  private submit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.props.submit(this.state);
   }
 }
 
 export default connect(
-  (state: IAppState, props: RouteComponentProps<{ id: string }>) => 
-    state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser,
-  (dispatch: Dispatch<AppAction>) => ({
+  (state: IState, props: RouteComponentProps<{ id: string }>) => ({
+    user: state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
+  }),
+  (dispatch: Dispatch<UsersAction>) => ({
     submit: (u: IUser) => {
       if (u._id && u._id.length > 0) {
         dispatch(actionCreators.updateUser(u));
