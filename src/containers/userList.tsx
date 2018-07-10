@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { AppState, actionCreators, AppAction } from '../store';
+import { push } from 'react-router-redux';
+import { Dispatch } from 'redux';
 
 import { UserList as UnwrappedUserList } from '../components/userList';
-import { Dispatch } from 'redux';
-import { push } from 'react-router-redux';
+import { actionCreators, AppAction, IAppState } from '../store';
 
 export const UserList = connect(
-  (state: AppState) => 
+  (state: IAppState) => 
     ({ list: state.users }),
   (dispatch: Dispatch<AppAction>) => ({
     deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),

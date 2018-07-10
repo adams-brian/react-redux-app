@@ -1,99 +1,100 @@
 import { LocationChangeAction } from 'react-router-redux';
 
-export interface User { 
+export interface IUser { 
   _id: string;
   firstname: string;
   lastname: string;
 }
 
-export interface AppState {
+export interface IAppState {
   loading: boolean;
   counters: number[];
-  users: Array<User>;
+  users: IUser[];
 }
 
-interface Action {
+interface IAction {
   type: string;
 }
 
+/* tslint:disable:max-classes-per-file */
 export const START_LOADING = '[App] START LOADING';
-class StartLoading implements Action {
-  readonly type = START_LOADING;
+class StartLoading implements IAction {
+  public readonly type = START_LOADING;
 }
 export const DONE_LOADING = '[App] DONE LOADING';
-class DoneLoading implements Action {
-  readonly type = DONE_LOADING;
+class DoneLoading implements IAction {
+  public readonly type = DONE_LOADING;
 }
 type LoadingAction = StartLoading | DoneLoading;
 
-abstract class ActionWithNumberPayload implements Action {
-  readonly type: string;
+abstract class ActionWithNumberPayload implements IAction {
+  public readonly type: string;
   constructor(public payload: number) {}
 }
 export const INCREMENT = '[Counters] INCREMENT';
 class Increment extends ActionWithNumberPayload {
-  readonly type = INCREMENT;
+  public readonly type = INCREMENT;
 }
 export const DECREMENT = '[Counters] DECREMENT';
 class Decrement extends ActionWithNumberPayload {
-  readonly type = DECREMENT;
+  public readonly type = DECREMENT;
 }
 export const RESET = '[Counters] RESET';
 class Reset extends ActionWithNumberPayload {
-  readonly type = RESET;
+  public readonly type = RESET;
 }
 export const ADD_COUNTER = '[Counters] ADD COUNTER';
-class AddCounter implements Action {
-  readonly type = ADD_COUNTER;
+class AddCounter implements IAction {
+  public readonly type = ADD_COUNTER;
 }
 export const REMOVE_COUNTER = '[Counters] REMOVE COUNTER';
 class RemoveCounter extends ActionWithNumberPayload {
-  readonly type = REMOVE_COUNTER;
+  public readonly type = REMOVE_COUNTER;
 }
 export const COUNTERS_UPDATED = '[Counters] COUNTERS UPDATED';
-class CountersUpdated implements Action {
-  readonly type = COUNTERS_UPDATED;
+class CountersUpdated implements IAction {
+  public readonly type = COUNTERS_UPDATED;
   constructor(public payload: number[]) {}
 }
 type CounterAction = Increment | Decrement | Reset | AddCounter | RemoveCounter | CountersUpdated;
 
 export const CREATE_USER = '[Users] CREATE';
-export class CreateUser implements Action {
-  readonly type = CREATE_USER;
-  constructor(public payload: User) {}
+export class CreateUser implements IAction {
+  public readonly type = CREATE_USER;
+  constructor(public payload: IUser) {}
 }
 export const UPDATE_USER = '[Users] UPDATE';
-class UpdateUser implements Action {
-  readonly type = UPDATE_USER;
-  constructor(public payload: User) {}
+class UpdateUser implements IAction {
+  public readonly type = UPDATE_USER;
+  constructor(public payload: IUser) {}
 }
 export const DELETE_USER = '[Users] DELETE';
-export class DeleteUser implements Action {
-  readonly type = DELETE_USER;
+export class DeleteUser implements IAction {
+  public readonly type = DELETE_USER;
   constructor(public payload: string) {}
 }
 export const USERS_UPDATED = '[Users] USERS UPDATED';
-class UsersUpdated implements Action {
-  readonly type = USERS_UPDATED;
-  constructor(public payload: Array<User>) {}
+class UsersUpdated implements IAction {
+  public readonly type = USERS_UPDATED;
+  constructor(public payload: IUser[]) {}
 }
 type UserAction = CreateUser | UpdateUser | DeleteUser | UsersUpdated;
 
 export const actionCreators = {
-  startLoading: () => Object.assign({}, new StartLoading()),
   doneLoading: () => Object.assign({}, new DoneLoading()),
+  startLoading: () => Object.assign({}, new StartLoading()),
 
-  increment: (index: number) => Object.assign({}, new Increment(index)),
-  decrement: (index: number) => Object.assign({}, new Decrement(index)),
-  reset: (index: number) => Object.assign({}, new Reset(index)),
   addCounter: () => Object.assign({}, new AddCounter()),
-  removeCounter: (index: number) => Object.assign({}, new RemoveCounter(index)),
   countersUpdated: (counters: number[]) => Object.assign({}, new CountersUpdated(counters)),
+  decrement: (index: number) => Object.assign({}, new Decrement(index)),
+  increment: (index: number) => Object.assign({}, new Increment(index)),
+  removeCounter: (index: number) => Object.assign({}, new RemoveCounter(index)),
+  reset: (index: number) => Object.assign({}, new Reset(index)),
 
-  createUser: (user: User) => Object.assign({}, new CreateUser(user)),
-  updateUser: (user: User) => Object.assign({}, new UpdateUser(user)),
+  createUser: (user: IUser) => Object.assign({}, new CreateUser(user)),
   deleteUser: (id: string) => Object.assign({}, new DeleteUser(id)),
-  usersUpdated: (users: Array<User>) => Object.assign({}, new UsersUpdated(users)),
+  updateUser: (user: IUser) => Object.assign({}, new UpdateUser(user)),
+  usersUpdated: (users: IUser[]) => Object.assign({}, new UsersUpdated(users)),
 };
 
 function loadingReducer(state: boolean = false, action: LoadingAction) {
@@ -141,7 +142,7 @@ function countersReducer(state: number[] = [], action: CounterAction) {
   }
 }
 
-const usersReducer = (state: User[] = [], action: UserAction) => {
+const usersReducer = (state: IUser[] = [], action: UserAction) => {
   switch (action.type) {
     case CREATE_USER:
       return [...state, action.payload];
@@ -156,9 +157,9 @@ const usersReducer = (state: User[] = [], action: UserAction) => {
   }
 };
 
-export const reducers = { 
-  loading: loadingReducer,
+export const reducers = {
   counters: countersReducer,
+  loading: loadingReducer,
   users: usersReducer
 };
 

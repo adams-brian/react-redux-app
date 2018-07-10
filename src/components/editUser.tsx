@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { User } from '../store';
+import { IUser } from '../store';
 
-interface EditUserProps extends User {
-  submit: (user: User) => void;
+interface IEditUserProps extends IUser {
+  submit: (user: IUser) => void;
 }
 
-export class EditUser extends React.Component<EditUserProps, User> {
-  constructor(props: EditUserProps) {
+export class EditUser extends React.Component<IEditUserProps, IUser> {
+  constructor(props: IEditUserProps) {
     super(props);
     this.state = {
       _id: props._id,
@@ -20,18 +20,7 @@ export class EditUser extends React.Component<EditUserProps, User> {
     this.submit = this.submit.bind(this);
   }
 
-  inputChanged(e: React.FormEvent<HTMLInputElement>) {
-    this.setState({
-      [e.currentTarget.name as any]: e.currentTarget.value
-    });
-  }
-
-  submit(e: React.FormEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    this.props.submit(this.state);
-  }
-
-  render() {
+  public render() {
     return (
       <div className="edit-user">
         <h1>{this.state._id && this.state._id.length > 0 ? 'Edit' : 'Create'} User</h1>
@@ -79,5 +68,16 @@ export class EditUser extends React.Component<EditUserProps, User> {
         </form>
       </div>
     );
+  }
+
+  private inputChanged = (e: React.FormEvent<HTMLInputElement>) => {
+    this.setState({
+      [e.currentTarget.name]: e.currentTarget.value
+    } as Pick<IUser, keyof IUser>);
+  }
+
+  private submit(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    this.props.submit(this.state);
   }
 }

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { User } from '../store';
+import { IUser } from '../store';
 
-interface UserListProps {
-  list: Array<User>;
+interface IUserListProps {
+  list: IUser[];
   deleteUser: (id: string) => void;
   editUser: (id: string) => void;
 }
 
-export const UserList = (props: UserListProps) => (
+/* tslint:disable:jsx-no-lambda */
+export const UserList = (props: IUserListProps) => (
   <div className="users-container">
     <h1 className="users-header">Users</h1>
     <table className="table table-hover">

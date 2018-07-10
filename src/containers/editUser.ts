@@ -1,17 +1,17 @@
-import { connect, Dispatch } from 'react-redux';
-import { AppState, actionCreators } from '../store';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { generate } from 'shortid';
 import { push } from 'react-router-redux';
+import { Dispatch } from 'redux';
+import { generate } from 'shortid';
 
 import { EditUser as UnwrappedEditUser } from '../components/editUser';
-import { User, AppAction } from '../store';
+import { actionCreators, AppAction, IAppState, IUser } from '../store';
 
 export const EditUser = connect(
-  (state: AppState, props: RouteComponentProps<{ id: string }>) => 
-    state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as User,
+  (state: IAppState, props: RouteComponentProps<{ id: string }>) => 
+    state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser,
   (dispatch: Dispatch<AppAction>) => ({
-    submit: (u: User) => {
+    submit: (u: IUser) => {
       if (u._id && u._id.length > 0) {
         dispatch(actionCreators.updateUser(u));
       }

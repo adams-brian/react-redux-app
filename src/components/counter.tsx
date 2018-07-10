@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface CounterProps {
+interface ICounterProps {
   counter: number;
   increment: () => void;
   decrement: () => void;
@@ -8,7 +8,7 @@ interface CounterProps {
   remove: () => void;
 }
 
-export const Counter = (props: CounterProps) => (
+export const Counter = (props: ICounterProps) => (
   <div className="counter">
     <button type="button" className="close" aria-label="Close" onClick={props.remove}>
       <span aria-hidden="true">&times;</span>

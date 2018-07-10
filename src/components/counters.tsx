@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Counter } from './counter';
 
-interface CountersProps {
+interface ICountersProps {
   counters: number[];
   addCounter: () => void;
   increment: (index: number) => void;
@@ -10,7 +10,8 @@ interface CountersProps {
   remove: (index: number) => void;
 }
 
-export const Counters = (props: CountersProps) => (
+/* tslint:disable:jsx-no-lambda */
+export const Counters = (props: ICountersProps) => (
   <div className="counters-container">
     <h1>Counters</h1>
     <div className="counter-container">

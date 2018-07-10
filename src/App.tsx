@@ -1,23 +1,23 @@
 import * as React from 'react';
-import './App.css';
-import { Route, Switch, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 
-import { Nav } from './components/nav';
-import { Counters } from './containers/counters';
-import { Users } from './components/users';
+import './App.css';
 import { Footer } from './components/footer';
+import { Nav } from './components/nav';
+import { Users } from './components/users';
+import { Counters } from './containers/counters';
+import { IAppState } from './store';
 
-import { AppState } from './store';
-
-interface AppProps extends RouteComponentProps<{}> {
+interface IAppProps extends RouteComponentProps<{}> {
   loading: boolean;
 }
 
+/* tslint:disable:jsx-no-lambda */
 export const App = withRouter(connect(
-  (state: AppState) => ({ loading: state.loading })
+  (state: IAppState) => ({ loading: state.loading })
 )(
-  (props: AppProps) => (
+  (props: IAppProps) => (
     <div className="App d-flex flex-column">
       <Nav/>
       <div className="content">
