@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import { createLocation, createMemoryHistory } from 'history'
 import * as React from 'react';
 
-import { App } from './App';
+import { App, mapStateToProps } from './App';
 import About from './common/components/about';
 import Counters from './counters/components/counters';
 import Users from './users/components/users';
@@ -62,6 +62,11 @@ describe("App", () => {
   it('routes /about to About', () => {
     const component = shallow(element);
     expect(component.find('Route[path="/about"]').first().prop('component')).toBe(About);
+  });
+
+  it('should map the state to the props', () => {
+    expect(mapStateToProps({ loading: false })).toEqual({ loading: false });
+    expect(mapStateToProps({ loading: true })).toEqual({ loading: true });
   });
   
 });

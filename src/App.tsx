@@ -37,8 +37,10 @@ export const App = (props: IAppProps) => (
   </div>
 );
 
+export const mapStateToProps = (state: IState) => ({ loading: state.loading });
+
 export default withRouter(
   connect(
-    (state: IState) => ({ loading: state.loading })
+    mapStateToProps
   )( App )
 );
