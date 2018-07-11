@@ -1,4 +1,4 @@
-import { actionCreators, DONE_LOADING, LoadingAction, reducers, START_LOADING } from "./store";
+import { actionCreators, DONE_LOADING, reducers, START_LOADING } from "./store";
 
 describe('store', () => {
   
