@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`store actionCreators should export actionCreators 1`] = `
+Object {
+  "type": "[Counters] ADD COUNTER",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 2`] = `
+Object {
+  "payload": Array [
+    2,
+    -2,
+  ],
+  "type": "[Counters] COUNTERS UPDATED",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 3`] = `
+Object {
+  "payload": 1,
+  "type": "[Counters] DECREMENT",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 4`] = `
+Object {
+  "payload": 2,
+  "type": "[Counters] INCREMENT",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 5`] = `
+Object {
+  "payload": 3,
+  "type": "[Counters] REMOVE COUNTER",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 6`] = `
+Object {
+  "payload": 4,
+  "type": "[Counters] RESET",
+}
+`;
+
+exports[`store actions should export action types 1`] = `"[Counters] ADD COUNTER"`;
+
+exports[`store actions should export action types 2`] = `"[Counters] COUNTERS UPDATED"`;
+
+exports[`store actions should export action types 3`] = `"[Counters] DECREMENT"`;
+
+exports[`store actions should export action types 4`] = `"[Counters] INCREMENT"`;
+
+exports[`store actions should export action types 5`] = `"[Counters] REMOVE COUNTER"`;
+
+exports[`store actions should export action types 6`] = `"[Counters] RESET"`;
