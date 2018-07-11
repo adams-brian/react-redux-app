@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserList component renders as expected 1`] = `
+<div
+  className="users-container"
+>
+  <h1
+    className="users-header"
+  >
+    Users
+  </h1>
+  <table
+    className="table table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          First Name
+        </th>
+        <th>
+          Last Name
+        </th>
+        <th
+          style={
+            Object {
+              "width": "1px",
+            }
+          }
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <UserListRow
+        deleteUser={[Function]}
+        editUser={[Function]}
+        key="123"
+        user={
+          Object {
+            "_id": "123",
+            "firstname": "abc",
+            "lastname": "def",
+          }
+        }
+      />
+      <UserListRow
+        deleteUser={[Function]}
+        editUser={[Function]}
+        key="456"
+        user={
+          Object {
+            "_id": "456",
+            "firstname": "hij",
+            "lastname": "klm",
+          }
+        }
+      />
+    </tbody>
+  </table>
+  <Link
+    className="create-user"
+    replace={false}
+    to="/users/createuser"
+  >
+    <button
+      className="btn btn-primary"
+      type="button"
+    >
+      Create User
+    </button>
+  </Link>
+</div>
+`;

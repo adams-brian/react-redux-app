@@ -41,11 +41,15 @@ export const UserList = (props: IUserListProps) => (
   </div>
 );
 
+export const mapStateToProps = (state: IState) => 
+  ({ list: state.users });
+
+export const mapDispatchToProps = (dispatch: Dispatch<UsersAction>) => ({
+  deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),
+  editUser: (id: string) => { dispatch(push('/users/' + id)); }
+});
+
 export default connect(
-  (state: IState) => 
-    ({ list: state.users }),
-  (dispatch: Dispatch<UsersAction>) => ({
-    deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),
-    editUser: (id: string) => { dispatch(push('/users/' + id)); }
-  })
-)(UserList);
+  mapStateToProps,
+  mapDispatchToProps
+)( UserList );

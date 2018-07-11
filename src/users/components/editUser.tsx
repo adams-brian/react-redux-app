@@ -81,19 +81,23 @@ export class EditUser extends React.Component<IEditUserProps, IUser> {
   }
 }
 
-export default connect(
-  (state: IState, props: RouteComponentProps<{ id: string }>) => ({
-    user: state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
-  }),
-  (dispatch: Dispatch<UsersAction>) => ({
-    submit: (u: IUser) => {
-      if (u._id && u._id.length > 0) {
-        dispatch(actionCreators.updateUser(u));
-      }
-      else {
-        dispatch(actionCreators.createUser(Object.assign({}, u, { _id: generate() })));
-      }
-      dispatch(push('/users'));
+export const mapStateToProps = (state: IState, props: RouteComponentProps<{ id: string }>) => ({
+  user: state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
+});
+
+export const mapDispatchToProps = (dispatch: Dispatch<UsersAction>) => ({
+  submit: (u: IUser) => {
+    if (u._id && u._id.length > 0) {
+      dispatch(actionCreators.updateUser(u));
     }
-  })
-)(EditUser);
+    else {
+      dispatch(actionCreators.createUser(Object.assign({}, u, { _id: generate() })));
+    }
+    dispatch(push('/users'));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)( EditUser );
