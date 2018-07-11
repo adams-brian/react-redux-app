@@ -35,15 +35,18 @@ export const Counters = (props: ICountersProps) => (
   </div>
 );
 
+export const mapStateToProps = (state: IState) =>
+  ({ counters: state.counters });
+
+export const mapDispatchToProps = {
+  addCounter: actionCreators.addCounter,
+  decrement: actionCreators.decrement,
+  increment: actionCreators.increment,
+  remove: actionCreators.removeCounter,
+  reset: actionCreators.reset
+};
+
 export default connect(
-  (state: IState) => 
-    ({ counters: state.counters }),
-  { 
-    addCounter: actionCreators.addCounter,
-    decrement: actionCreators.decrement,
-    increment: actionCreators.increment,
-    remove: actionCreators.removeCounter,
-    reset: actionCreators.reset
-  }
-)(Counters);
-  
+  mapStateToProps,
+  mapDispatchToProps
+)( Counters );
