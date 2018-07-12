@@ -1,128 +1,115 @@
 import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux';
-import { combineEpics, Epic } from 'redux-observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/ignoreElements';
+import { combineEpics, Epic, ofType } from 'redux-observable';
+import { Observable } from 'rxjs';
+import { catchError, debounceTime, filter,
+  ignoreElements, mergeMap, tap } from 'rxjs/operators';
 
+import { loadCounters, saveCounters } from './counters/api';
 import { actionCreators as countersActionCreators, ADD_COUNTER, 
   CountersAction, DECREMENT, INCREMENT, 
   IState as ICountersState, REMOVE_COUNTER, RESET } from './counters/store';
+
 import { actionCreators as appActionCreators, 
   IState as IAppState, LoadingAction } from './store';
+
+import { createUser, deleteUser, loadUsers, updateUser } from './users/api';
 import { actionCreators as usersActionCreators, 
   CREATE_USER, CreateUser, DELETE_USER, DeleteUser,
   IState as IUsersState, UPDATE_USER, UpdateUser, UsersAction } from './users/store';
 
-export type AppAction = LoadingAction | CountersAction | UsersAction | LocationChangeAction;
+type AppAction = LoadingAction | CountersAction | UsersAction | LocationChangeAction;
 
 type IState = IAppState | ICountersState | IUsersState;
 
-const loadCounters: Epic<AppAction, IState> = (action$, store) => action$
-  .ofType(LOCATION_CHANGE)
-  .do((action: LocationChangeAction) => {
-    if (action.payload.pathname.startsWith('/counters')) {
-      store.dispatch(appActionCreators.startLoading());
-      fetch('http://localhost:4000/counters')
-      .then((response) => response.json())
-      .then((json) => {
-        store.dispatch(countersActionCreators.countersUpdated(json.data));
-        store.dispatch(appActionCreators.doneLoading());
-      })
-      .catch((err) => {
-        console.log('request for counters failed: ', err);
-        store.dispatch(appActionCreators.doneLoading());
-      });
-    }
-  })
-  .ignoreElements();
+export const loadCountersEpic: Epic<AppAction, IState> = (action$) => action$.pipe(
+  ofType(LOCATION_CHANGE),
+  filter((action: LocationChangeAction) => action.payload.pathname.startsWith('/counters')),
+  mergeMap(() =>
+    Observable.concat(
+      Observable.of(appActionCreators.startLoading()),
+      Observable.fromPromise(loadCounters()).pipe(
+        mergeMap(data =>
+          Observable.concat(
+            Observable.of(countersActionCreators.countersUpdated(data)),
+            Observable.of(appActionCreators.doneLoading())
+          )
+        ),
+        catchError(err => {
+          console.log('request for counters failed: ' + err);
+          return Observable.of(appActionCreators.doneLoading());
+        })
+      )
+    )
+  )
+);
 
-const saveCounters: Epic<AppAction, IState> = (action$, store) => action$
-  .ofType(INCREMENT, DECREMENT, RESET, ADD_COUNTER, REMOVE_COUNTER)
-  .debounceTime(1000)
-  .do((action: AppAction) => {
+export const saveCountersEpic: Epic<AppAction, IState> = (action$, store) => action$.pipe(
+  ofType(INCREMENT, DECREMENT, RESET, ADD_COUNTER, REMOVE_COUNTER),
+  debounceTime(1000),
+  tap(() => {
     const state = store.getState() as ICountersState;
-    fetch('http://localhost:4000/counters', {
-      body: JSON.stringify({counters: state.counters}),
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      method: 'post'
-    })
-    .catch((err) => console.log('failed to save counters: ', err));
-  })
-  .ignoreElements();
+    saveCounters(state.counters)
+    .catch(err => console.log('failed to save counters: ', err));
+  }),
+  ignoreElements()
+);
 
-const loadUsers: Epic<AppAction, IState> = (action$, store) => action$
-  .ofType(LOCATION_CHANGE)
-  .do((action: LocationChangeAction) => {
-    const state = store.getState() as IUsersState;
-    if (action.payload.pathname.startsWith('/users') && state.users.length === 0) {
-      store.dispatch(appActionCreators.startLoading());
-      fetch('http://localhost:4000/users')
-      .then((response) => response.json())
-      .then((json) => {
-        store.dispatch(usersActionCreators.usersUpdated(json.data));
-        store.dispatch(appActionCreators.doneLoading());
-      })
-      .catch((err) => {
-        console.log('request for users failed: ', err);
-        store.dispatch(appActionCreators.doneLoading());
-      });
-    }
-  })
-  .ignoreElements();
+export const loadUsersEpic: Epic<AppAction, IState> = (action$, store) => action$.pipe(
+  ofType(LOCATION_CHANGE),
+  filter((action: LocationChangeAction) =>
+    action.payload.pathname.startsWith('/users') &&
+    (store.getState() as IUsersState).users.length === 0),
+  mergeMap(() =>
+    Observable.concat(
+      Observable.of(appActionCreators.startLoading()),
+      Observable.fromPromise(loadUsers()).pipe(
+        mergeMap(data =>
+          Observable.concat(
+            Observable.of(usersActionCreators.usersUpdated(data)),
+            Observable.of(appActionCreators.doneLoading())
+          )
+        ),
+        catchError(err => {
+          console.log('request for users failed: ' + err);
+          return Observable.of(appActionCreators.doneLoading());
+        })
+      )
+    )
+  )
+)
 
-const createUser: Epic<AppAction, IState> = (action$, store) => action$
-  .ofType(CREATE_USER)
-  .do((action: CreateUser) => {
-    fetch('http://localhost:4000/users', {
-      body: JSON.stringify(action.payload),
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      method: 'put'
-    })
-    .catch((err) => console.log('failed to create user: ', err));
-  })
-  .ignoreElements();
+export const createUserEpic: Epic<AppAction, IState> = (action$) => action$.pipe(
+  ofType(CREATE_USER),
+  tap((action: CreateUser) => {
+    createUser(action.payload)
+    .catch(err => console.log('failed to create user: ' + err));
+  }),
+  ignoreElements()
+)
 
-const updateUser: Epic<AppAction, IState> = (action$, store) => action$
-  .ofType(UPDATE_USER)
-  .do((action: UpdateUser) => {
-    fetch('http://localhost:4000/users/' + action.payload._id, {
-      body: JSON.stringify(action.payload),
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      method: 'post'
-    })
-    .catch((err) => console.log('failed to update user: ', err));
-  })
-  .ignoreElements();
+export const updateUserEpic: Epic<AppAction, IState> = (action$) => action$.pipe(
+  ofType(UPDATE_USER),
+  tap((action: UpdateUser) => {
+    updateUser(action.payload)
+    .catch(err => console.log('failed to update user: ', err));
+  }),
+  ignoreElements()
+)
 
-const deleteUser: Epic<AppAction, IState> = (action$, store) => action$
-  .ofType(DELETE_USER)
-  .do((action: DeleteUser) => {
-    fetch('http://localhost:4000/users/' + action.payload, {
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      method: 'delete'
-    })
-    .catch((err) => console.log('failed to delete user: ', err));
-  })
-  .ignoreElements();
+export const deleteUserEpic: Epic<AppAction, IState> = (action$, store) => action$.pipe(
+  ofType(DELETE_USER),
+  tap((action: DeleteUser) => {
+    deleteUser(action.payload)
+    .catch(err => console.log('failed to delete user: ', err));
+  }),
+  ignoreElements()
+)
 
 export default combineEpics(
-  loadCounters,
-  saveCounters,
-  loadUsers,
-  createUser,
-  updateUser,
-  deleteUser
+  loadCountersEpic,
+  saveCountersEpic,
+  loadUsersEpic,
+  createUserEpic,
+  updateUserEpic,
+  deleteUserEpic
 );
