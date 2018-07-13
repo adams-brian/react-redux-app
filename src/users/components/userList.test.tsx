@@ -1,6 +1,6 @@
+import { push } from 'connected-react-router';
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { push } from 'react-router-redux';
 import * as sinon from 'sinon';
 
 import { actionCreators } from '../store';

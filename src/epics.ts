@@ -1,29 +1,24 @@
-import { LOCATION_CHANGE, LocationChangeAction } from 'react-router-redux';
+import { LOCATION_CHANGE, RouterState } from 'connected-react-router';
 import { combineEpics, Epic, ofType } from 'redux-observable';
 import { concat, from, of } from 'rxjs';
 import { catchError, debounceTime, filter,
   ignoreElements, mergeMap, tap } from 'rxjs/operators';
 
 import { loadCounters, saveCounters } from './counters/api';
-import { actionCreators as countersActionCreators, ADD_COUNTER, 
-  CountersAction, DECREMENT, INCREMENT, 
+import { actionCreators as countersActionCreators,
+  ADD_COUNTER, DECREMENT, INCREMENT,
   IState as ICountersState, REMOVE_COUNTER, RESET } from './counters/store';
 
-import { actionCreators as appActionCreators, 
-  IState as IAppState, LoadingAction } from './store';
+import { actionCreators as appActionCreators } from './store';
 
 import { createUser, deleteUser, loadUsers, updateUser } from './users/api';
 import { actionCreators as usersActionCreators, 
   CREATE_USER, CreateUser, DELETE_USER, DeleteUser,
-  IState as IUsersState, UPDATE_USER, UpdateUser, UsersAction } from './users/store';
+  IState as IUsersState, UPDATE_USER, UpdateUser } from './users/store';
 
-export type AppAction = LoadingAction | CountersAction | UsersAction | LocationChangeAction;
-
-export type IState = IAppState | ICountersState | IUsersState;
-
-export const loadCountersEpic: Epic<AppAction> = (action$) => action$.pipe(
+export const loadCountersEpic: Epic = (action$, state$) => action$.pipe(
   ofType(LOCATION_CHANGE),
-  filter((action: LocationChangeAction) => action.payload.pathname.startsWith('/counters')),
+  filter(() => (state$.value.router as RouterState).location.pathname.startsWith('/counters')),
   mergeMap(() =>
     concat(
       of(appActionCreators.startLoading()),
@@ -43,7 +38,7 @@ export const loadCountersEpic: Epic<AppAction> = (action$) => action$.pipe(
   )
 );
 
-export const saveCountersEpic: Epic<AppAction> = (action$, state$) => action$.pipe(
+export const saveCountersEpic: Epic = (action$, state$) => action$.pipe(
   ofType(INCREMENT, DECREMENT, RESET, ADD_COUNTER, REMOVE_COUNTER),
   debounceTime(1000),
   tap(() => {
@@ -54,10 +49,10 @@ export const saveCountersEpic: Epic<AppAction> = (action$, state$) => action$.pi
   ignoreElements()
 );
 
-export const loadUsersEpic: Epic<AppAction, AppAction, IState> = (action$, state$) => action$.pipe(
+export const loadUsersEpic: Epic = (action$, state$) => action$.pipe(
   ofType(LOCATION_CHANGE),
-  filter((action: LocationChangeAction) =>
-    action.payload.pathname.startsWith('/users') &&
+  filter(() =>
+    (state$.value.router as RouterState).location.pathname.startsWith('/users') &&
     (state$.value as IUsersState).users.length === 0),
   mergeMap(() =>
     concat(
@@ -78,7 +73,7 @@ export const loadUsersEpic: Epic<AppAction, AppAction, IState> = (action$, state
   )
 )
 
-export const createUserEpic: Epic<AppAction> = (action$) => action$.pipe(
+export const createUserEpic: Epic = (action$) => action$.pipe(
   ofType(CREATE_USER),
   tap((action: CreateUser) => {
     createUser(action.payload)
@@ -87,7 +82,7 @@ export const createUserEpic: Epic<AppAction> = (action$) => action$.pipe(
   ignoreElements()
 )
 
-export const updateUserEpic: Epic<AppAction> = (action$) => action$.pipe(
+export const updateUserEpic: Epic = (action$) => action$.pipe(
   ofType(UPDATE_USER),
   tap((action: UpdateUser) => {
     updateUser(action.payload)
@@ -96,7 +91,7 @@ export const updateUserEpic: Epic<AppAction> = (action$) => action$.pipe(
   ignoreElements()
 )
 
-export const deleteUserEpic: Epic<AppAction> = (action$) => action$.pipe(
+export const deleteUserEpic: Epic = (action$) => action$.pipe(
   ofType(DELETE_USER),
   tap((action: DeleteUser) => {
     deleteUser(action.payload)

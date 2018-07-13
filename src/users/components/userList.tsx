@@ -1,8 +1,8 @@
+import { push } from 'connected-react-router';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { push, RouterAction } from 'react-router-redux';
-import { Dispatch } from 'redux';
+import { Action, Dispatch } from 'redux';
 
 import { actionCreators, IState, IUser, UsersAction } from '../store';
 import UserListRow from './userListRow';
@@ -44,7 +44,7 @@ export const UserList = (props: IUserListProps) => (
 export const mapStateToProps = (state: IState) => 
   ({ list: state.users });
 
-export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | RouterAction>) => ({
+export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | Action<any>>) => ({
   deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),
   editUser: (id: string) => { dispatch(push('/users/' + id)); }
 });

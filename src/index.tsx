@@ -1,8 +1,8 @@
-import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter, routerMiddleware, routerReducer } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEpicMiddleware } from 'redux-observable';
@@ -16,21 +16,24 @@ import { reducers as appReducers } from './store';
 import { reducers as usersReducers } from './users/store';
 
 // create a browser history
-const history = createHistory();
+const history = createBrowserHistory();
 
 const epicMiddleware = createEpicMiddleware();
 
 export const store = createStore(
-  combineReducers({
-    ...appReducers,
-    ...countersReducers,
-    ...usersReducers,
-    router: routerReducer
-  }),
-  composeWithDevTools(applyMiddleware(
-    routerMiddleware(history),
-    epicMiddleware
-  ))
+  connectRouter(history)(
+    combineReducers({
+      ...appReducers,
+      ...countersReducers,
+      ...usersReducers
+    })
+  ),
+  composeWithDevTools(
+    applyMiddleware(
+      routerMiddleware(history),
+      epicMiddleware
+    )
+  )
 );
 
 epicMiddleware.run(rootEpic);
