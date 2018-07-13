@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux';
+import { push, RouterAction } from 'react-router-redux';
 import { Dispatch } from 'redux';
 
 import { actionCreators, IState, IUser, UsersAction } from '../store';
@@ -44,7 +44,7 @@ export const UserList = (props: IUserListProps) => (
 export const mapStateToProps = (state: IState) => 
   ({ list: state.users });
 
-export const mapDispatchToProps = (dispatch: Dispatch<UsersAction>) => ({
+export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | RouterAction>) => ({
   deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),
   editUser: (id: string) => { dispatch(push('/users/' + id)); }
 });

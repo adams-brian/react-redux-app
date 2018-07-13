@@ -9,7 +9,7 @@ import { createEpicMiddleware } from 'redux-observable';
 
 import App from './App';
 import { reducers as countersReducers } from './counters/store';
-import epics from './epics';
+import rootEpic from './epics';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { reducers as appReducers } from './store';
@@ -17,6 +17,8 @@ import { reducers as usersReducers } from './users/store';
 
 // create a browser history
 const history = createHistory();
+
+const epicMiddleware = createEpicMiddleware();
 
 export const store = createStore(
   combineReducers({
@@ -27,9 +29,11 @@ export const store = createStore(
   }),
   composeWithDevTools(applyMiddleware(
     routerMiddleware(history),
-    createEpicMiddleware(epics)
+    epicMiddleware
   ))
 );
+
+epicMiddleware.run(rootEpic);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
-import { push } from 'react-router-redux';
+import { push, RouterAction } from 'react-router-redux';
 import { Dispatch } from 'redux';
 import { generate } from 'shortid';
 
@@ -85,7 +85,7 @@ export const mapStateToProps = (state: IState, props: RouteComponentProps<{ id: 
   user: state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch<UsersAction>) => ({
+export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | RouterAction>) => ({
   submit: (u: IUser) => {
     if (u._id && u._id.length > 0) {
       dispatch(actionCreators.updateUser(u));
