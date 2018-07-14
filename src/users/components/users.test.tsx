@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import EditUser from './editUser';
 import UserList from './userList';
-import Users from './users';
+import { Users } from './users';
 
 describe("Users", () => {
 

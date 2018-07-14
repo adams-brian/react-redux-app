@@ -1,8 +1,6 @@
-import { combineReducers } from 'redux';
+import { Action, combineReducers } from 'redux';
 
-import { IAction } from '../store';
-
-export interface IUser { 
+export interface IUser {
   _id: string;
   firstname: string;
   lastname: string;
@@ -18,36 +16,36 @@ export interface IState {
 
 /* tslint:disable:max-classes-per-file */
 export const CREATE_USER = '[Users] CREATE';
-export class CreateUser implements IAction {
+export class CreateUser implements Action {
   public readonly type = CREATE_USER;
-  constructor(public payload: IUser) {}
+  constructor(public payload: IUser) { }
 }
 export const UPDATE_USER = '[Users] UPDATE';
-export class UpdateUser implements IAction {
+export class UpdateUser implements Action {
   public readonly type = UPDATE_USER;
-  constructor(public payload: IUser) {}
+  constructor(public payload: IUser) { }
 }
 export const DELETE_USER = '[Users] DELETE';
-export class DeleteUser implements IAction {
+export class DeleteUser implements Action {
   public readonly type = DELETE_USER;
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 export const USERS_UPDATED = '[Users] USERS UPDATED';
-class UsersUpdated implements IAction {
+class UsersUpdated implements Action {
   public readonly type = USERS_UPDATED;
-  constructor(public payload: IUser[]) {}
+  constructor(public payload: IUser[]) { }
 }
 export const LOAD_USERS = '[Users] LOAD USERS';
-export class LoadUsers implements IAction {
+export class LoadUsers implements Action {
   public readonly type = LOAD_USERS;
 }
 export const USERS_ERROR = '[Users] USERS ERROR';
-export class UsersError implements IAction {
+export class UsersError implements Action {
   public readonly type = USERS_ERROR;
-  constructor(public payload: Error) {}
+  constructor(public payload: Error) { }
 }
 export const USERS_LOADED = '[Users] USERS LOADED';
-export class UsersLoaded implements IAction {
+export class UsersLoaded implements Action {
   public readonly type = USERS_LOADED;
 }
 export type UsersAction = CreateUser | UpdateUser | DeleteUser | UsersUpdated | LoadUsers | UsersError | UsersLoaded;

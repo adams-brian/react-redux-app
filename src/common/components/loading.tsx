@@ -39,7 +39,7 @@ export default <TProps extends {}>(Component: React.ComponentType<TProps>) =>
     public render() {
       if (this.props.loaded) {
         return (
-          <Component />
+          <Component {...this.props} />
         );
       }
       else if (this.props.error && this.props.error.length > 0) {

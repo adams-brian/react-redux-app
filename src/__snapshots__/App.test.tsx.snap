@@ -36,19 +36,3 @@ exports[`App renders as expected 1`] = `
   <Footer />
 </div>
 `;
-
-exports[`App shows loading 1`] = `
-<div
-  className="App d-flex flex-column"
->
-  <Nav />
-  <div
-    className="content"
-  >
-    <div
-      className="loading"
-    />
-  </div>
-  <Footer />
-</div>
-`;
