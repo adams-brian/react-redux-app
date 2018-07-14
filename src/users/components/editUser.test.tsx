@@ -87,7 +87,8 @@ describe("EditUser", () => {
 
   describe("connection", () => {
 
-    const users = [
+    const error = '';
+    const list = [
       {
         _id: '123',
         firstname: 'abc',
@@ -104,6 +105,8 @@ describe("EditUser", () => {
         lastname: 'qrs'
       }
     ];
+    const loaded = true;
+    const users = { error, list, loaded };
 
     it('should map state to props', () => {
       const getProps = (id: string) => 

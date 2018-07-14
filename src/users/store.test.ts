@@ -1,5 +1,5 @@
 import { actionCreators, CREATE_USER, DELETE_USER,
-  reducers, UPDATE_USER, USERS_UPDATED } from "./store";
+  listReducer, UPDATE_USER, USERS_UPDATED } from "./store";
 
 const user = {
   _id: '123',
@@ -44,11 +44,11 @@ describe('store', () => {
 
   });
 
-  describe('reducer', () => {
+  describe('listReducer', () => {
 
     it('should append when creating a user', () => {
-      expect(reducers.users(undefined, actionCreators.createUser(user))).toEqual([user]);
-      expect(reducers.users(list, actionCreators.createUser(user))).toEqual([...list, user]);
+      expect(listReducer(undefined, actionCreators.createUser(user))).toEqual([user]);
+      expect(listReducer(list, actionCreators.createUser(user))).toEqual([...list, user]);
     });
 
     it('should replace when updating a user', () => {
@@ -57,19 +57,19 @@ describe('store', () => {
         firstname: 'updated',
         lastname: 'user'
       };
-      expect(reducers.users(undefined, actionCreators.updateUser(update))).toEqual([]);
-      expect(reducers.users(list, actionCreators.updateUser(update))).toEqual(
+      expect(listReducer(undefined, actionCreators.updateUser(update))).toEqual([]);
+      expect(listReducer(list, actionCreators.updateUser(update))).toEqual(
         list.map(u => u._id === update._id ? Object.assign({}, u, update) : u)
       );
-      expect(reducers.users(list, actionCreators.updateUser(user))).toEqual(list);
+      expect(listReducer(list, actionCreators.updateUser(user))).toEqual(list);
     });
 
     it('should remove when deleting a user', () => {
-      expect(reducers.users(undefined, actionCreators.deleteUser('456'))).toEqual([]);
-      expect(reducers.users(list, actionCreators.deleteUser('456'))).toEqual(
+      expect(listReducer(undefined, actionCreators.deleteUser('456'))).toEqual([]);
+      expect(listReducer(list, actionCreators.deleteUser('456'))).toEqual(
         list.filter(u => u._id !== '456')
       );
-      expect(reducers.users(list, actionCreators.deleteUser('123'))).toEqual(list);
+      expect(listReducer(list, actionCreators.deleteUser('123'))).toEqual(list);
     });
 
     it('should replace all when updating users', () => {
@@ -85,9 +85,9 @@ describe('store', () => {
           lastname: 'srq'
         }
       ];
-      expect(reducers.users(undefined, actionCreators.usersUpdated(newList))).toEqual(newList);
-      expect(reducers.users(list, actionCreators.usersUpdated(newList))).toEqual(newList);
-      expect(reducers.users(list, actionCreators.usersUpdated([]))).toEqual([]);
+      expect(listReducer(undefined, actionCreators.usersUpdated(newList))).toEqual(newList);
+      expect(listReducer(list, actionCreators.usersUpdated(newList))).toEqual(newList);
+      expect(listReducer(list, actionCreators.usersUpdated([]))).toEqual([]);
     });
 
   });

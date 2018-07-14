@@ -67,7 +67,7 @@ describe("UserList", () => {
   describe("connection", () => {
 
     it('maps state to props', () => {
-      expect(mapStateToProps({ users: list })).toEqual({ list });
+      expect(mapStateToProps({ users: { error: '', list, loaded: true }})).toEqual({ list });
     });
   
     it('dispatches deleteUser', () => {

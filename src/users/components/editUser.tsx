@@ -82,7 +82,7 @@ export class EditUser extends React.Component<IEditUserProps, IUser> {
 }
 
 export const mapStateToProps = (state: IState, props: RouteComponentProps<{ id: string }>) => ({
-  user: state.users.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
+  user: state.users.list.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
 });
 
 export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | Action<any>>) => ({

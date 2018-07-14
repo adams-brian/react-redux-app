@@ -42,7 +42,7 @@ export const UserList = (props: IUserListProps) => (
 );
 
 export const mapStateToProps = (state: IState) => 
-  ({ list: state.users });
+  ({ list: state.users.list });
 
 export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | Action<any>>) => ({
   deleteUser: (id: string) => dispatch(actionCreators.deleteUser(id)),

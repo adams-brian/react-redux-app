@@ -14,7 +14,7 @@ import { actionCreators as appActionCreators } from './store';
 import { createUser, deleteUser, loadUsers, updateUser } from './users/api';
 import { actionCreators as usersActionCreators, 
   CREATE_USER, CreateUser, DELETE_USER, DeleteUser,
-  IState as IUsersState, UPDATE_USER, UpdateUser } from './users/store';
+  LOAD_USERS, UPDATE_USER, UpdateUser } from './users/store';
 
 export const loadCountersEpic: Epic = (action$, state$) => action$.pipe(
   ofType(LOCATION_CHANGE),
@@ -50,25 +50,18 @@ export const saveCountersEpic: Epic = (action$, state$) => action$.pipe(
 );
 
 export const loadUsersEpic: Epic = (action$, state$) => action$.pipe(
-  ofType(LOCATION_CHANGE),
-  filter(() =>
-    (state$.value.router as RouterState).location.pathname.startsWith('/users') &&
-    (state$.value as IUsersState).users.length === 0),
+  ofType(LOAD_USERS),
   mergeMap(() =>
-    concat(
-      of(appActionCreators.startLoading()),
-      from(loadUsers()).pipe(
-        mergeMap(data =>
-          concat(
-            of(usersActionCreators.usersUpdated(data)),
-            of(appActionCreators.doneLoading())
-          )
-        ),
-        catchError(err => {
-          console.log('request for users failed: ' + err);
-          return of(appActionCreators.doneLoading());
-        })
-      )
+    from(loadUsers()).pipe(
+      mergeMap(data =>
+        concat(
+          of(usersActionCreators.usersUpdated(data)),
+          of(usersActionCreators.usersLoaded())
+        )
+      ),
+      catchError(err => {
+        return of(usersActionCreators.usersError(err));
+      })
     )
   )
 )
