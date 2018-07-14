@@ -88,7 +88,7 @@ describe("Counters", () => {
   describe('connection', () => {
 
     it('maps state to props', () => {
-      expect(mapStateToProps({ counters })).toEqual({ counters: list });
+      expect(mapStateToProps({ counters })).toEqual({ counters: list, loaded, error });
     });
   
     it('maps dispatch to props', () => {
@@ -96,6 +96,7 @@ describe("Counters", () => {
         addCounter: actionCreators.addCounter,
         decrement: actionCreators.decrement,
         increment: actionCreators.increment,
+        load: actionCreators.loadCounters,
         remove: actionCreators.removeCounter,
         reset: actionCreators.reset
       });

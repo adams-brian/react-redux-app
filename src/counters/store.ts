@@ -1,6 +1,4 @@
-import { combineReducers } from 'redux';
-
-import { IAction } from '../store';
+import { Action, combineReducers } from 'redux';
 
 export interface IState {
   counters: {
@@ -11,7 +9,7 @@ export interface IState {
 }
 
 /* tslint:disable:max-classes-per-file */
-abstract class ActionWithNumberPayload implements IAction {
+abstract class ActionWithNumberPayload implements Action {
   public readonly type: string;
   constructor(public payload: number) {}
 }
@@ -28,7 +26,7 @@ class Reset extends ActionWithNumberPayload {
   public readonly type = RESET;
 }
 export const ADD_COUNTER = '[Counters] ADD COUNTER';
-class AddCounter implements IAction {
+class AddCounter implements Action {
   public readonly type = ADD_COUNTER;
 }
 export const REMOVE_COUNTER = '[Counters] REMOVE COUNTER';
@@ -36,21 +34,21 @@ class RemoveCounter extends ActionWithNumberPayload {
   public readonly type = REMOVE_COUNTER;
 }
 export const COUNTERS_UPDATED = '[Counters] COUNTERS UPDATED';
-class CountersUpdated implements IAction {
+class CountersUpdated implements Action {
   public readonly type = COUNTERS_UPDATED;
   constructor(public payload: number[]) {}
 }
 export const LOAD_COUNTERS = '[Counters] LOAD COUNTERS';
-export class LoadCounters implements IAction {
+export class LoadCounters implements Action {
   public readonly type = LOAD_COUNTERS;
 }
 export const COUNTERS_ERROR = '[Counters] COUNTERS ERROR';
-export class CountersError implements IAction {
+export class CountersError implements Action {
   public readonly type = COUNTERS_ERROR;
   constructor(public payload: Error) {}
 }
 export const COUNTERS_LOADED = '[Counters] COUNTERS LOADED';
-export class CountersLoaded implements IAction {
+export class CountersLoaded implements Action {
   public readonly type = COUNTERS_LOADED;
 }
 export type CountersAction = Increment | Decrement | Reset | AddCounter | RemoveCounter |

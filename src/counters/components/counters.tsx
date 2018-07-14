@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import loading from '../../common/components/loading';
 import { actionCreators, IState } from '../store';
 import Counter from './counter';
 
@@ -35,13 +36,17 @@ export const Counters = (props: ICountersProps) => (
   </div>
 );
 
-export const mapStateToProps = (state: IState) =>
-  ({ counters: state.counters.list });
+export const mapStateToProps = (state: IState) =>({
+  counters: state.counters.list,
+  error: state.counters.error,
+  loaded: state.counters.loaded
+});
 
 export const mapDispatchToProps = {
   addCounter: actionCreators.addCounter,
   decrement: actionCreators.decrement,
   increment: actionCreators.increment,
+  load: actionCreators.loadCounters,
   remove: actionCreators.removeCounter,
   reset: actionCreators.reset
 };
@@ -49,4 +54,6 @@ export const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)( Counters );
+)(
+  loading(Counters)
+);

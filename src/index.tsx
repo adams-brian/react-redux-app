@@ -12,7 +12,6 @@ import { reducers as countersReducers } from './counters/store';
 import rootEpic from './epics';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import { reducers as appReducers } from './store';
 import { reducers as usersReducers } from './users/store';
 
 // create a browser history
@@ -23,7 +22,6 @@ const epicMiddleware = createEpicMiddleware();
 export const store = createStore(
   connectRouter(history)(
     combineReducers({
-      ...appReducers,
       ...countersReducers,
       ...usersReducers
     })

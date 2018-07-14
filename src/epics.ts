@@ -1,15 +1,12 @@
-import { LOCATION_CHANGE, RouterState } from 'connected-react-router';
 import { combineEpics, Epic, ofType } from 'redux-observable';
 import { concat, from, of } from 'rxjs';
-import { catchError, debounceTime, filter,
+import { catchError, debounceTime,
   ignoreElements, mergeMap, tap } from 'rxjs/operators';
 
 import { loadCounters, saveCounters } from './counters/api';
 import { actionCreators as countersActionCreators,
-  ADD_COUNTER, DECREMENT, INCREMENT,
-  IState as ICountersState, REMOVE_COUNTER, RESET } from './counters/store';
-
-import { actionCreators as appActionCreators } from './store';
+  ADD_COUNTER, DECREMENT, INCREMENT, IState as ICountersState,
+  LOAD_COUNTERS, REMOVE_COUNTER, RESET } from './counters/store';
 
 import { createUser, deleteUser, loadUsers, updateUser } from './users/api';
 import { actionCreators as usersActionCreators, 
@@ -17,23 +14,18 @@ import { actionCreators as usersActionCreators,
   LOAD_USERS, UPDATE_USER, UpdateUser } from './users/store';
 
 export const loadCountersEpic: Epic = (action$, state$) => action$.pipe(
-  ofType(LOCATION_CHANGE),
-  filter(() => (state$.value.router as RouterState).location.pathname.startsWith('/counters')),
+  ofType(LOAD_COUNTERS),
   mergeMap(() =>
-    concat(
-      of(appActionCreators.startLoading()),
-      from(loadCounters()).pipe(
-        mergeMap(data =>
-          concat(
-            of(countersActionCreators.countersUpdated(data)),
-            of(appActionCreators.doneLoading())
-          )
-        ),
-        catchError(err => {
-          console.log('request for counters failed: ' + err);
-          return of(appActionCreators.doneLoading());
-        })
-      )
+    from(loadCounters()).pipe(
+      mergeMap(data =>
+        concat(
+          of(countersActionCreators.countersUpdated(data)),
+          of(countersActionCreators.countersLoaded())
+        )
+      ),
+      catchError(err => {
+        return of(countersActionCreators.countersError(err));
+      })
     )
   )
 );
