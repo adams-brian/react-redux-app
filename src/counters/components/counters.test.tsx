@@ -7,7 +7,10 @@ import { Counters, mapDispatchToProps, mapStateToProps } from './counters';
 
 describe("Counters", () => {
 
-  const counters = [5,1,4,2,3];
+  const list = [5,1,4,2,3];
+  const loaded = true;
+  const error = '';
+  const counters = { list, loaded, error };
 
   describe("component", () => {
 
@@ -27,7 +30,7 @@ describe("Counters", () => {
       remove = sinon.spy();
 
       element = <Counters
-        counters={[...counters]}
+        counters={[...list]}
         addCounter={addCounter}
         increment={increment}
         decrement={decrement}
@@ -85,7 +88,7 @@ describe("Counters", () => {
   describe('connection', () => {
 
     it('maps state to props', () => {
-      expect(mapStateToProps({ counters })).toEqual({ counters });
+      expect(mapStateToProps({ counters })).toEqual({ counters: list });
     });
   
     it('maps dispatch to props', () => {

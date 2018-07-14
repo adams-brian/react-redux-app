@@ -43,7 +43,7 @@ export const saveCountersEpic: Epic = (action$, state$) => action$.pipe(
   debounceTime(1000),
   tap(() => {
     const state = state$.value as ICountersState;
-    saveCounters(state.counters)
+    saveCounters(state.counters.list)
     .catch(err => console.log('failed to save counters: ', err));
   }),
   ignoreElements()

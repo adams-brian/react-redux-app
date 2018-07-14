@@ -36,7 +36,7 @@ export const Counters = (props: ICountersProps) => (
 );
 
 export const mapStateToProps = (state: IState) =>
-  ({ counters: state.counters });
+  ({ counters: state.counters.list });
 
 export const mapDispatchToProps = {
   addCounter: actionCreators.addCounter,
