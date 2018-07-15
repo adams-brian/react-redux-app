@@ -49,6 +49,13 @@
     "<rootDir>/src/setupTests.ts"
   ],
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!/node_modules/",
+      "!src/index.tsx",
+      "!src/registerServiceWorker.ts",
+      "!src/setupTests.ts"
+    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
