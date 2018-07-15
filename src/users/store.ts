@@ -75,7 +75,7 @@ export const listReducer = (state: IUser[] = [], action: UsersAction) => {
   }
 };
 
-export const loadedReducer = (state: boolean = false, action: UsersLoaded) => {
+export const loadedReducer = (state: boolean = false, action: UsersAction) => {
   switch (action.type) {
     case USERS_LOADED:
       return true;
@@ -84,7 +84,7 @@ export const loadedReducer = (state: boolean = false, action: UsersLoaded) => {
   }
 }
 
-export const errorReducer = (state: string = '', action: UsersError) => {
+export const errorReducer = (state: string = '', action: UsersAction) => {
   switch (action.type) {
     case USERS_ERROR:
       return action.payload.message;

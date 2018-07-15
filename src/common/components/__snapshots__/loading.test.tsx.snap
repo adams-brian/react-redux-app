@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loading renders as expected 1`] = `
+<loading(SimpleComponent)
+  error=""
+  load={[Function]}
+  loaded={false}
+  message="message from props"
+/>
+`;
+
+exports[`loading should clear the timeout on unmount 1`] = `null`;
+
+exports[`loading should clear the timeout on unmount 2`] = `null`;
+
+exports[`loading should render null for 500ms, then loading until loaded for load times > 500ms 1`] = `null`;
+
+exports[`loading should render null for 500ms, then loading until loaded for load times > 500ms 2`] = `"<div>Loading...</div>"`;
+
+exports[`loading should render null for 500ms, then loading until loaded for load times > 500ms 3`] = `"<div>message from props</div>"`;
+
+exports[`loading should render null until loaded for load times < 500ms 1`] = `null`;
+
+exports[`loading should render null until loaded for load times < 500ms 2`] = `"<div>message from props</div>"`;
+
+exports[`loading should render null until loaded for load times < 500ms 3`] = `"<div>message from props</div>"`;
+
+exports[`loading should render the component if loaded 1`] = `"<div>message from props</div>"`;
+
+exports[`loading should render the component if loaded 2`] = `"<div>message from props</div>"`;
+
+exports[`loading should render the component if loaded 3`] = `"<div>message from props</div>"`;
+
+exports[`loading should render the error message 1`] = `null`;
+
+exports[`loading should render the error message 2`] = `"<div>Loading...</div>"`;
+
+exports[`loading should render the error message 3`] = `"<div>Error: error message</div>"`;

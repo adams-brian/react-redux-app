@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`epics createUserEpic should dispatch UsersError if createUser rejects 1`] = `
+Array [
+  Object {
+    "payload": "error in createUser",
+    "type": "[Users] USERS ERROR",
+  },
+]
+`;
+
+exports[`epics deleteUserEpic should dispatch UsersError if deleteUser rejects 1`] = `
+Array [
+  Object {
+    "payload": "error in deleteUser",
+    "type": "[Users] USERS ERROR",
+  },
+]
+`;
+
+exports[`epics loadCountersEpics should dispatch CountersError if loadCounters rejects 1`] = `
+Array [
+  Object {
+    "payload": "error in loadCounters",
+    "type": "[Counters] COUNTERS ERROR",
+  },
+]
+`;
+
+exports[`epics loadCountersEpics should dispatch CountersUpdated and CountersLoaded on LoadCounters if loadCounters succeeds 1`] = `
+Array [
+  Object {
+    "payload": Array [
+      5,
+      1,
+      4,
+      2,
+      3,
+    ],
+    "type": "[Counters] COUNTERS UPDATED",
+  },
+  Object {
+    "type": "[Counters] COUNTERS LOADED",
+  },
+]
+`;
+
+exports[`epics loadUsersEpic should dispatch UsersError if loadUsers rejects 1`] = `
+Array [
+  Object {
+    "payload": "error in loadUsers",
+    "type": "[Users] USERS ERROR",
+  },
+]
+`;
+
+exports[`epics loadUsersEpic should dispatch UsersUpdated and UsersLoaded on LoadUsers if loadUsers succeeds 1`] = `
+Array [
+  Object {
+    "payload": Array [
+      Object {
+        "_id": "123",
+        "firstname": "abc",
+        "lastname": "def",
+      },
+      Object {
+        "_id": "456",
+        "firstname": "ghi",
+        "lastname": "jkl",
+      },
+    ],
+    "type": "[Users] USERS UPDATED",
+  },
+  Object {
+    "type": "[Users] USERS LOADED",
+  },
+]
+`;
+
+exports[`epics saveCountersEpic should dispatch CountersError if saveCounters rejects 1`] = `
+Array [
+  Object {
+    "payload": "error in saveCounters",
+    "type": "[Counters] COUNTERS ERROR",
+  },
+]
+`;
+
+exports[`epics updateUserEpic should dispatch UsersError if updateUser rejects 1`] = `
+Array [
+  Object {
+    "payload": "error in updateUser",
+    "type": "[Users] USERS ERROR",
+  },
+]
+`;

@@ -100,7 +100,7 @@ export const listReducer = (state: number[] = [], action: CountersAction) => {
   }
 }
 
-export const loadedReducer = (state: boolean = false, action: CountersLoaded) => {
+export const loadedReducer = (state: boolean = false, action: CountersAction) => {
   switch (action.type) {
     case COUNTERS_LOADED:
       return true;
@@ -109,7 +109,7 @@ export const loadedReducer = (state: boolean = false, action: CountersLoaded) =>
   }
 }
 
-export const errorReducer = (state: string = '', action: CountersError) => {
+export const errorReducer = (state: string = '', action: CountersAction) => {
   switch (action.type) {
     case COUNTERS_ERROR:
       return action.payload.message;

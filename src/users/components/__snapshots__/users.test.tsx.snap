@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Users renders as expected 1`] = `
+exports[`Users component renders as expected 1`] = `
 <Switch>
   <Route
     component={[Function]}
@@ -17,4 +17,97 @@ exports[`Users renders as expected 1`] = `
     path="/users/:id"
   />
 </Switch>
+`;
+
+exports[`Users connected component should render as expected 1`] = `
+<loading(Users)
+  error=""
+  load={[Function]}
+  loaded={false}
+/>
+`;
+
+exports[`Users connected component should render as expected 2`] = `
+<div
+  className="users-container"
+>
+  <h1
+    className="users-header"
+  >
+    Users
+  </h1>
+  <table
+    className="table table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          First Name
+        </th>
+        <th>
+          Last Name
+        </th>
+        <th
+          style={
+            Object {
+              "width": "1px",
+            }
+          }
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <UserListRow
+        deleteUser={[Function]}
+        editUser={[Function]}
+        key="123"
+        user={
+          Object {
+            "_id": "123",
+            "firstname": "abc",
+            "lastname": "def",
+          }
+        }
+      >
+        <tr
+          onClick={[Function]}
+        >
+          <td>
+            abc
+          </td>
+          <td>
+            def
+          </td>
+          <td>
+            <button
+              onClick={[Function]}
+            >
+              <span
+                className="fa fa-times"
+              />
+            </button>
+          </td>
+        </tr>
+      </UserListRow>
+    </tbody>
+  </table>
+  <Link
+    className="create-user"
+    replace={false}
+    to="/users/createuser"
+  >
+    <a
+      className="create-user"
+      href="/users/createuser"
+      onClick={[Function]}
+    >
+      <button
+        className="btn btn-primary"
+        type="button"
+      >
+        Create User
+      </button>
+    </a>
+  </Link>
+</div>
 `;
