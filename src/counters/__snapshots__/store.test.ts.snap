@@ -8,6 +8,19 @@ Object {
 
 exports[`store actionCreators should export actionCreators 2`] = `
 Object {
+  "payload": [Error: error message],
+  "type": "[Counters] COUNTERS ERROR",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 3`] = `
+Object {
+  "type": "[Counters] COUNTERS LOADED",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 4`] = `
+Object {
   "payload": Array [
     2,
     -2,
@@ -16,28 +29,34 @@ Object {
 }
 `;
 
-exports[`store actionCreators should export actionCreators 3`] = `
+exports[`store actionCreators should export actionCreators 5`] = `
 Object {
   "payload": 1,
   "type": "[Counters] DECREMENT",
 }
 `;
 
-exports[`store actionCreators should export actionCreators 4`] = `
+exports[`store actionCreators should export actionCreators 6`] = `
 Object {
   "payload": 2,
   "type": "[Counters] INCREMENT",
 }
 `;
 
-exports[`store actionCreators should export actionCreators 5`] = `
+exports[`store actionCreators should export actionCreators 7`] = `
+Object {
+  "type": "[Counters] LOAD COUNTERS",
+}
+`;
+
+exports[`store actionCreators should export actionCreators 8`] = `
 Object {
   "payload": 3,
   "type": "[Counters] REMOVE COUNTER",
 }
 `;
 
-exports[`store actionCreators should export actionCreators 6`] = `
+exports[`store actionCreators should export actionCreators 9`] = `
 Object {
   "payload": 4,
   "type": "[Counters] RESET",
@@ -46,12 +65,18 @@ Object {
 
 exports[`store actions should export action types 1`] = `"[Counters] ADD COUNTER"`;
 
-exports[`store actions should export action types 2`] = `"[Counters] COUNTERS UPDATED"`;
+exports[`store actions should export action types 2`] = `"[Counters] COUNTERS ERROR"`;
 
-exports[`store actions should export action types 3`] = `"[Counters] DECREMENT"`;
+exports[`store actions should export action types 3`] = `"[Counters] COUNTERS LOADED"`;
 
-exports[`store actions should export action types 4`] = `"[Counters] INCREMENT"`;
+exports[`store actions should export action types 4`] = `"[Counters] COUNTERS UPDATED"`;
 
-exports[`store actions should export action types 5`] = `"[Counters] REMOVE COUNTER"`;
+exports[`store actions should export action types 5`] = `"[Counters] DECREMENT"`;
 
-exports[`store actions should export action types 6`] = `"[Counters] RESET"`;
+exports[`store actions should export action types 6`] = `"[Counters] INCREMENT"`;
+
+exports[`store actions should export action types 7`] = `"[Counters] LOAD COUNTERS"`;
+
+exports[`store actions should export action types 8`] = `"[Counters] REMOVE COUNTER"`;
+
+exports[`store actions should export action types 9`] = `"[Counters] RESET"`;

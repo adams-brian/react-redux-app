@@ -14,27 +14,29 @@ interface ICountersProps {
   remove: (index: number) => void;
 }
 
-export const Counters = (props: ICountersProps) => (
-  <div className="counters-container">
-    <h1>Counters</h1>
-    <h3>Count: {props.counters.length}</h3>
-    <div className="counter-container">
-      {props.counters.map((counter, index) => 
-        (<Counter 
-          key={index} /* not ideal, but it works in this case */
-          index={index}
-          counter={counter}
-          increment={props.increment}
-          decrement={props.decrement}
-          reset={props.reset}
-          remove={props.remove}
-        />))}
-      <div className="add-counter rounded" onClick={props.addCounter}>
-        <span className="fa fa-plus" />
+export function Counters(props: ICountersProps) {
+  return (
+    <div className="counters-container">
+      <h1>Counters</h1>
+      <h3>Count: {props.counters.length}</h3>
+      <div className="counter-container">
+        {props.counters.map((counter, index) =>
+          (<Counter
+            key={index} /* not ideal, but it works in this case */
+            index={index}
+            counter={counter}
+            increment={props.increment}
+            decrement={props.decrement}
+            reset={props.reset}
+            remove={props.remove}
+          />))}
+        <div className="add-counter rounded" onClick={props.addCounter}>
+          <span className="fa fa-plus" />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
 export const mapStateToProps = (state: IState) =>({
   counters: state.counters.list,

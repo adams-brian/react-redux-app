@@ -5,6 +5,16 @@ import * as sinon from 'sinon';
 import { actionCreators } from '../store';
 import { Counters, mapDispatchToProps, mapStateToProps } from './counters';
 
+import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router';
+import { mount } from 'enzyme';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import rootEpic from '../../epics';
+import { reducers } from '../store';
+import ConnectedCounters from './counters';
+
 describe("Counters", () => {
 
   const list = [5,1,4,2,3];
@@ -100,6 +110,41 @@ describe("Counters", () => {
         remove: actionCreators.removeCounter,
         reset: actionCreators.reset
       });
+    });
+
+  });
+
+  describe('connected component', () => {
+
+    it('should render as expected', () => {
+      const history = createMemoryHistory({ initialEntries: ['/counters'] });
+      const epicMiddleware = createEpicMiddleware();
+      const store = createStore(
+        connectRouter(history)(
+          combineReducers({
+            ...reducers
+          })
+        ),
+        applyMiddleware(
+          routerMiddleware(history),
+          epicMiddleware
+        )
+      );
+      epicMiddleware.run(rootEpic);
+
+      const component = mount(
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <ConnectedCounters />
+          </ConnectedRouter>
+        </Provider>
+      );
+      expect(component.find('loading(Counters)').first()).toMatchSnapshot();
+
+      store.dispatch(actionCreators.countersUpdated([3,1,2]));
+      store.dispatch(actionCreators.countersLoaded());
+      component.update();
+      expect(component.find('div[className="counters-container"]').first()).toMatchSnapshot();
     });
 
   });

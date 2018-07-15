@@ -70,3 +70,205 @@ exports[`Counters component renders as expected 1`] = `
   </div>
 </div>
 `;
+
+exports[`Counters connected component should render as expected 1`] = `
+<loading(Counters)
+  addCounter={[Function]}
+  counters={Array []}
+  decrement={[Function]}
+  error=""
+  increment={[Function]}
+  load={[Function]}
+  loaded={false}
+  remove={[Function]}
+  reset={[Function]}
+/>
+`;
+
+exports[`Counters connected component should render as expected 2`] = `
+<div
+  className="counters-container"
+>
+  <h1>
+    Counters
+  </h1>
+  <h3>
+    Count: 
+    3
+  </h3>
+  <div
+    className="counter-container"
+  >
+    <Counter
+      counter={3}
+      decrement={[Function]}
+      increment={[Function]}
+      index={0}
+      key="0"
+      remove={[Function]}
+      reset={[Function]}
+    >
+      <div
+        className="counter"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+        <div>
+          <h1>
+            3
+          </h1>
+        </div>
+        <div>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-plus"
+            />
+          </button>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-minus"
+            />
+          </button>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-refresh"
+            />
+          </button>
+        </div>
+      </div>
+    </Counter>
+    <Counter
+      counter={1}
+      decrement={[Function]}
+      increment={[Function]}
+      index={1}
+      key="1"
+      remove={[Function]}
+      reset={[Function]}
+    >
+      <div
+        className="counter"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+        <div>
+          <h1>
+            1
+          </h1>
+        </div>
+        <div>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-plus"
+            />
+          </button>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-minus"
+            />
+          </button>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-refresh"
+            />
+          </button>
+        </div>
+      </div>
+    </Counter>
+    <Counter
+      counter={2}
+      decrement={[Function]}
+      increment={[Function]}
+      index={2}
+      key="2"
+      remove={[Function]}
+      reset={[Function]}
+    >
+      <div
+        className="counter"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+        <div>
+          <h1>
+            2
+          </h1>
+        </div>
+        <div>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-plus"
+            />
+          </button>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-minus"
+            />
+          </button>
+          <button
+            onClick={[Function]}
+          >
+            <span
+              className="fa fa-refresh"
+            />
+          </button>
+        </div>
+      </div>
+    </Counter>
+    <div
+      className="add-counter rounded"
+      onClick={[Function]}
+    >
+      <span
+        className="fa fa-plus"
+      />
+    </div>
+  </div>
+</div>
+`;
