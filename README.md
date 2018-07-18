@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Dependencies
 
-This application depends on a locally running instance of the API server found here: [express-mongo-api](https://github.com/brian-lives-outdoors/express-mongo-api)
+This application depends on a locally running instance of the API server found here: [graphql-express-mongo](https://github.com/brian-lives-outdoors/graphql-express-mongo)
 
 ## Running the application
 
