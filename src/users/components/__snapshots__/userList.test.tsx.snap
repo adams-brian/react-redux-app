@@ -36,8 +36,8 @@ exports[`UserList component renders as expected 1`] = `
         key="123"
         user={
           Object {
-            "_id": "123",
             "firstname": "abc",
+            "id": "123",
             "lastname": "def",
           }
         }
@@ -48,8 +48,8 @@ exports[`UserList component renders as expected 1`] = `
         key="456"
         user={
           Object {
-            "_id": "456",
             "firstname": "hij",
+            "id": "456",
             "lastname": "klm",
           }
         }

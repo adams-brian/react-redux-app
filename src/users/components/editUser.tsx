@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Action, Dispatch } from 'redux';
-import { generate } from 'shortid';
 
-import { actionCreators, IState, IUser, UsersAction } from '../store';
+import { actionCreators, IState, IUser,
+  NEW_USER_PLACEHOLDER_ID, UsersAction } from '../store';
 
 interface IEditUserProps {
   user: IUser;
@@ -22,7 +22,7 @@ export class EditUser extends React.Component<IEditUserProps, IUser> {
   public render() {
     return (
       <div className="edit-user">
-        <h1>{this.state._id && this.state._id.length > 0 ? 'Edit' : 'Create'} User</h1>
+        <h1>{this.state.id && this.state.id.length > 0 ? 'Edit' : 'Create'} User</h1>
         <form>
           <div className="form-group">
             <label htmlFor="firstname">Firstname</label>
@@ -82,16 +82,16 @@ export class EditUser extends React.Component<IEditUserProps, IUser> {
 }
 
 export const mapStateToProps = (state: IState, props: RouteComponentProps<{ id: string }>) => ({
-  user: state.users.list.find(u => u._id === props.match.params.id) || { _id: '', firstname: '', lastname: '' } as IUser
+  user: state.users.list.find(u => u.id === props.match.params.id) || { id: '', firstname: '', lastname: '' } as IUser
 });
 
 export const mapDispatchToProps = (dispatch: Dispatch<UsersAction | Action<any>>) => ({
   submit: (u: IUser) => {
-    if (u._id && u._id.length > 0) {
+    if (u.id && u.id.length > 0) {
       dispatch(actionCreators.updateUser(u));
     }
     else {
-      dispatch(actionCreators.createUser(Object.assign({}, u, { _id: generate() })));
+      dispatch(actionCreators.createUser(Object.assign({}, u, { id: NEW_USER_PLACEHOLDER_ID })));
     }
     dispatch(push('/users'));
   }

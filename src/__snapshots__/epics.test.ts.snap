@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`epics createUserEpic should call createUser on CreateUser 1`] = `
+Array [
+  Object {
+    "payload": "987",
+    "type": "[Users] CREATE COMPLETED",
+  },
+]
+`;
+
 exports[`epics createUserEpic should dispatch UsersError if createUser rejects 1`] = `
 Array [
   Object {
@@ -59,13 +68,13 @@ Array [
   Object {
     "payload": Array [
       Object {
-        "_id": "123",
         "firstname": "abc",
+        "id": "123",
         "lastname": "def",
       },
       Object {
-        "_id": "456",
         "firstname": "ghi",
+        "id": "456",
         "lastname": "jkl",
       },
     ],

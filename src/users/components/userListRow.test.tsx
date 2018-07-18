@@ -14,8 +14,8 @@ describe("UserListRow", () => {
   
   beforeEach(() => {
     user = {
-      _id: '123',
       firstname: 'abc',
+      id: '123',
       lastname: 'def'
     }
   

@@ -3,8 +3,8 @@
 exports[`store actionCreators should export actionCreators 1`] = `
 Object {
   "payload": Object {
-    "_id": "123",
     "firstname": "abc",
+    "id": "123",
     "lastname": "def",
   },
   "type": "[Users] CREATE",
@@ -21,8 +21,8 @@ Object {
 exports[`store actionCreators should export actionCreators 3`] = `
 Object {
   "payload": Object {
-    "_id": "123",
     "firstname": "abc",
+    "id": "123",
     "lastname": "def",
   },
   "type": "[Users] UPDATE",
@@ -33,13 +33,13 @@ exports[`store actionCreators should export actionCreators 4`] = `
 Object {
   "payload": Array [
     Object {
-      "_id": "456",
       "firstname": "hij",
+      "id": "456",
       "lastname": "klm",
     },
     Object {
-      "_id": "789",
       "firstname": "nop",
+      "id": "789",
       "lastname": "qrs",
     },
   ],

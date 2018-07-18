@@ -3,20 +3,20 @@ import { actionCreators, CREATE_USER, DELETE_USER, errorReducer,
   USERS_ERROR, USERS_LOADED, USERS_UPDATED } from "./store";
 
 const user = {
-  _id: '123',
   firstname: 'abc',
+  id: '123',
   lastname: 'def'
 }
 
 const list = [
   {
-    _id: '456',
     firstname: 'hij',
+    id: '456',
     lastname: 'klm'
   },
   {
-    _id: '789',
     firstname: 'nop',
+    id: '789',
     lastname: 'qrs'
   }
 ];
@@ -41,7 +41,7 @@ describe('store', () => {
     
     it('should export actionCreators', () => {
       expect(actionCreators.createUser(user)).toMatchSnapshot();
-      expect(actionCreators.deleteUser(user._id)).toMatchSnapshot();
+      expect(actionCreators.deleteUser(user.id)).toMatchSnapshot();
       expect(actionCreators.updateUser(user)).toMatchSnapshot();
       expect(actionCreators.usersUpdated(list)).toMatchSnapshot();
       expect(actionCreators.loadUsers()).toMatchSnapshot();
@@ -60,13 +60,13 @@ describe('store', () => {
 
     it('should replace when updating a user', () => {
       const update = {
-        _id: '456',
         firstname: 'updated',
+        id: '456',
         lastname: 'user'
       };
       expect(listReducer(undefined, actionCreators.updateUser(update))).toEqual([]);
       expect(listReducer(list, actionCreators.updateUser(update))).toEqual(
-        list.map(u => u._id === update._id ? Object.assign({}, u, update) : u)
+        list.map(u => u.id === update.id ? Object.assign({}, u, update) : u)
       );
       expect(listReducer(list, actionCreators.updateUser(user))).toEqual(list);
     });
@@ -74,7 +74,7 @@ describe('store', () => {
     it('should remove when deleting a user', () => {
       expect(listReducer(undefined, actionCreators.deleteUser('456'))).toEqual([]);
       expect(listReducer(list, actionCreators.deleteUser('456'))).toEqual(
-        list.filter(u => u._id !== '456')
+        list.filter(u => u.id !== '456')
       );
       expect(listReducer(list, actionCreators.deleteUser('123'))).toEqual(list);
     });
@@ -82,13 +82,13 @@ describe('store', () => {
     it('should replace all when updating users', () => {
       const newList = [
         {
-          _id: '654',
           firstname: 'jih',
+          id: '654',
           lastname: 'mlk'
         },
         {
-          _id: '987',
           firstname: 'pon',
+          id: '987',
           lastname: 'srq'
         }
       ];

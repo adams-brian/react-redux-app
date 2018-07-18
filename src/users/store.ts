@@ -1,7 +1,9 @@
 import { Action, combineReducers } from 'redux';
 
+export const NEW_USER_PLACEHOLDER_ID = "[NEW_USER_PLACEHOLDER_ID]";
+
 export interface IUser {
-  _id: string;
+  id: string;
   firstname: string;
   lastname: string;
 }
@@ -19,6 +21,11 @@ export const CREATE_USER = '[Users] CREATE';
 export class CreateUser implements Action {
   public readonly type = CREATE_USER;
   constructor(public payload: IUser) { }
+}
+export const CREATE_USER_COMPLETED = '[Users] CREATE COMPLETED';
+export class CreateUserCompleted implements Action {
+  public readonly type = CREATE_USER_COMPLETED;
+  constructor(public payload: string) { }
 }
 export const UPDATE_USER = '[Users] UPDATE';
 export class UpdateUser implements Action {
@@ -48,10 +55,12 @@ export const USERS_LOADED = '[Users] USERS LOADED';
 export class UsersLoaded implements Action {
   public readonly type = USERS_LOADED;
 }
-export type UsersAction = CreateUser | UpdateUser | DeleteUser | UsersUpdated | LoadUsers | UsersError | UsersLoaded;
+export type UsersAction = CreateUser | CreateUserCompleted | UpdateUser |
+  DeleteUser | UsersUpdated | LoadUsers | UsersError | UsersLoaded;
 
 export const actionCreators = {
   createUser: (user: IUser) => Object.assign({}, new CreateUser(user)),
+  createUserCompleted: (id: string) => Object.assign({}, new CreateUserCompleted(id)),
   deleteUser: (id: string) => Object.assign({}, new DeleteUser(id)),
   loadUsers: () => Object.assign({}, new LoadUsers()),
   updateUser: (user: IUser) => Object.assign({}, new UpdateUser(user)),
@@ -64,10 +73,14 @@ export const listReducer = (state: IUser[] = [], action: UsersAction) => {
   switch (action.type) {
     case CREATE_USER:
       return [...state, action.payload];
+    case CREATE_USER_COMPLETED:
+      return state.map(user => user.id === NEW_USER_PLACEHOLDER_ID ?
+        Object.assign({}, user, { id: action.payload }) :
+        user);
     case UPDATE_USER:
-      return state.map(user => user._id === action.payload._id ? Object.assign({}, action.payload) : user);
+      return state.map(user => user.id === action.payload.id ? Object.assign({}, action.payload) : user);
     case DELETE_USER:
-      return state.filter(user => user._id !== action.payload);
+      return state.filter(user => user.id !== action.payload);
     case USERS_UPDATED:
       return [...action.payload];
     default:

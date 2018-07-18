@@ -16,8 +16,8 @@ describe("EditUser", () => {
     describe("create user mode", () => {
 
       const user = {
-        _id: '',
         firstname: '',
+        id: '',
         lastname: ''
       }
       let submit: sinon.SinonSpy;
@@ -43,7 +43,7 @@ describe("EditUser", () => {
         component.find('#firstname').first().simulate('change', { currentTarget: { name: 'firstname', value: 'new' } });
         component.find('#lastname').first().simulate('change', { currentTarget: { name: 'lastname', value: 'user' } });
         component.find('button[type="submit"]').first().simulate('click', { preventDefault: () => { /* noop */ }});
-        expect(submit.calledOnceWithExactly({ _id: '', firstname: 'new', lastname: 'user'})).toBe(true);
+        expect(submit.calledOnceWithExactly({ id: '', firstname: 'new', lastname: 'user'})).toBe(true);
       });
 
     });
@@ -51,8 +51,8 @@ describe("EditUser", () => {
     describe("edit user mode", () => {
 
       const user = {
-        _id: '123',
         firstname: 'abc',
+        id: '123',
         lastname: 'def'
       }
       let submit: sinon.SinonSpy;
@@ -78,7 +78,7 @@ describe("EditUser", () => {
         component.find('#firstname').first().simulate('change', { currentTarget: { name: 'firstname', value: 'updated' } });
         component.find('#lastname').first().simulate('change', { currentTarget: { name: 'lastname', value: 'user' } });
         component.find('button[type="submit"]').first().simulate('click', { preventDefault: () => { /* noop */ }});
-        expect(submit.calledOnceWithExactly({ _id: '123', firstname: 'updated', lastname: 'user'})).toBe(true);
+        expect(submit.calledOnceWithExactly({ id: '123', firstname: 'updated', lastname: 'user'})).toBe(true);
       });
       
     });
@@ -90,18 +90,18 @@ describe("EditUser", () => {
     const error = '';
     const list = [
       {
-        _id: '123',
         firstname: 'abc',
+        id: '123',
         lastname: 'def'
       },
       {
-        _id: '456',
         firstname: 'hij',
+        id: '456',
         lastname: 'klm'
       },
       {
-        _id: '789',
         firstname: 'nop',
+        id: '789',
         lastname: 'qrs'
       }
     ];
@@ -122,15 +122,15 @@ describe("EditUser", () => {
         });
       expect(mapStateToProps({ users }, getProps(''))).toEqual({
         user: {
-          _id: '',
           firstname: '',
+          id: '',
           lastname: ''
         }
       });
       expect(mapStateToProps({ users }, getProps('456'))).toEqual({
         user: {
-          _id: '456',
           firstname: 'hij',
+          id: '456',
           lastname: 'klm'
         }
       });
@@ -141,8 +141,8 @@ describe("EditUser", () => {
       const props = mapDispatchToProps(dispatch);
       expect(dispatch.called).toBe(false);
       const user = {
-        _id: '',
         firstname: 'new',
+        id: '',
         lastname: 'user'
       }
       props.submit(user);
@@ -150,8 +150,8 @@ describe("EditUser", () => {
       // can't use property matchers in typescript
       expect(dispatch.firstCall.args.length).toBe(1);
       const arg = dispatch.firstCall.args[0];
-      expect(arg.payload._id.length > 0).toBe(true);
-      delete arg.payload._id;
+      expect(arg.payload.id.length > 0).toBe(true);
+      delete arg.payload.id;
       expect(arg).toMatchSnapshot();
       expect(dispatch.secondCall.calledWithExactly(push('/users'))).toBe(true);
     });
@@ -161,8 +161,8 @@ describe("EditUser", () => {
       const props = mapDispatchToProps(dispatch);
       expect(dispatch.called).toBe(false);
       const user = {
-        _id: '123',
         firstname: 'abc',
+        id: '123',
         lastname: 'def'
       }
       props.submit(user);
