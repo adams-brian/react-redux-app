@@ -102,8 +102,8 @@ describe("Users", () => {
 
       store.dispatch(actionCreators.usersUpdated([
         {
-          _id: '123',
           firstname: 'abc',
+          id: '123',
           lastname: 'def'
         }
       ]));

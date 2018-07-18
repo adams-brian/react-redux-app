@@ -63,8 +63,8 @@ exports[`Users connected component should render as expected 2`] = `
         key="123"
         user={
           Object {
-            "_id": "123",
             "firstname": "abc",
+            "id": "123",
             "lastname": "def",
           }
         }

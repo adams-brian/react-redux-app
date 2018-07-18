@@ -65,8 +65,8 @@ export const createUserEpic: Epic = (action$) => action$.pipe(
   ofType(CREATE_USER),
   mergeMap((action: CreateUser) =>
     from(createUser(action.payload)).pipe(
-      mergeMap(() =>
-        of()
+      mergeMap(data =>
+        of(usersActionCreators.createUserCompleted(data))
       ),
       catchError(err =>
         of(usersActionCreators.usersError(err))

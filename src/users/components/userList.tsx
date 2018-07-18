@@ -27,7 +27,7 @@ export const UserList = (props: IUserListProps) => (
       <tbody>
         {props.list.map(user =>
           <UserListRow 
-            key={user._id}
+            key={user.id}
             user={user}
             editUser={props.editUser}
             deleteUser={props.deleteUser}

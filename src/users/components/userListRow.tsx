@@ -22,10 +22,10 @@ export default class UserListRow extends React.Component<IUserListRowProps> {
     );
   }
   private editUser = () => {
-    this.props.editUser(this.props.user._id);
+    this.props.editUser(this.props.user.id);
   }
   private deleteUser = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    this.props.deleteUser(this.props.user._id);
+    this.props.deleteUser(this.props.user.id);
   }
 }

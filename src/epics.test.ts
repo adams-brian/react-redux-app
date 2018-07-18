@@ -196,13 +196,13 @@ describe('epics', () => {
 
     const list = [
       {
-        _id: '123',
         firstname: 'abc',
+        id: '123',
         lastname: 'def'
       },
       {
-        _id: '456',
         firstname: 'ghi',
+        id: '456',
         lastname: 'jkl'
       }
     ];
@@ -259,8 +259,8 @@ describe('epics', () => {
   describe('createUserEpic', () => {
 
     const user = {
-      _id: '123',
       firstname: 'abc',
+      id: '123',
       lastname: 'def'
     }
     let createUserStub: sinon.SinonStub;
@@ -269,7 +269,7 @@ describe('epics', () => {
     
     beforeEach(() => {
       createUserStub = createCreateUserStub(
-        () => Promise.resolve()
+        () => Promise.resolve('987')
       );
       createUserEpic(action$, state$, undefined).subscribe(
         a => output.push(a)
@@ -283,7 +283,7 @@ describe('epics', () => {
     it('should call createUser on CreateUser', () => {
       actionSubject.next(usersActions.createUser(user));
       return Promise.resolve().then(() => {
-        expect(output).toEqual([]);
+        expect(output).toMatchSnapshot();
         expect(createUserStub.calledOnceWithExactly(user)).toBe(true);
       });
     });
@@ -316,8 +316,8 @@ describe('epics', () => {
   describe('updateUserEpic', () => {
 
     const user = {
-      _id: '123',
       firstname: 'abc',
+      id: '123',
       lastname: 'def'
     }
     let updateUserStub: sinon.SinonStub;

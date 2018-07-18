@@ -1,36 +1,61 @@
 import { IUser } from './store';
 
-export const deleteUser = (id: string) =>
-  fetch('http://localhost:4000/users/' + id, {
+export const deleteUser = async (id: string) => {
+  const response = await fetch('http://localhost:4000/graphql', {
+    body: JSON.stringify({ query:
+      `mutation { deleteUser( id: "${id}" ) { id } }`
+    }),
     headers: {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
-    method: 'delete'
-  })
-
-export const loadUsers = async () => {
-  const response = await fetch('http://localhost:4000/users');
+    method: 'post',
+  });
   const json = await response.json();
-  return [...json.data];
+  return json.data.deleteUser.id;
 }
 
-export const createUser = (user: IUser) =>
-  fetch('http://localhost:4000/users', {
-    body: JSON.stringify(user),
+export const loadUsers = async () => {
+  const response = await fetch('http://localhost:4000/graphql', {
+    body: JSON.stringify({ query:
+      `{ users { id firstname lastname } }`
+    }),
     headers: {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
-    method: 'put'
-  })
+    method: 'post',
+  });
+  const json = await response.json();
+  return [...json.data.users];
+}
 
-export const updateUser = (user: IUser) =>
-  fetch('http://localhost:4000/users/' + user._id, {
-    body: JSON.stringify(user),
+export const createUser = async (user: IUser) => {
+  const response = await fetch('http://localhost:4000/graphql', {
+    body: JSON.stringify({ query:
+      `mutation { createUser( firstname: "${user.firstname}", lastname: "${user.lastname}" ) { id } }`
+    }),
     headers: {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
-    method: 'post'
-  })
+    method: 'post',
+  });
+  const json = await response.json();
+  return json.data.createUser.id;
+}
+
+export const updateUser = async (user: IUser) => {
+  const response = await fetch('http://localhost:4000/graphql', {
+    body: JSON.stringify({ query:
+      `mutation { updateUser( id: "${user.id}" firstname: "${user.firstname}", lastname: "${user.lastname}" ) { id } }`
+    }),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+  });
+  const json = await response.json();
+  return json.data.updateUser.id;
+}

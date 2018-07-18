@@ -10,13 +10,13 @@ type propFunction = (id: string) => void;
 
 const list = [
   {
-    _id: '123',
     firstname: 'abc',
+    id: '123',
     lastname: 'def'
   },
   {
-    _id: '456',
     firstname: 'hij',
+    id: '456',
     lastname: 'klm'
   }
 ];
